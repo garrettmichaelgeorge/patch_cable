@@ -2,7 +2,8 @@
 
 PatchCable is a proof-of-concept implementation of the Patcher family of visual
 audio programming, using the Web Audio API and backed by Ruby on Rails with
-Stimulus Reflex.
+Stimulus Reflex. It offers a visual audio programming interface similar to that
+of Max/MSP and Pure Data.
 
 ## System dependencies
 
