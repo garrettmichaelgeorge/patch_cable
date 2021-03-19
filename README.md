@@ -7,8 +7,9 @@ of Max/MSP and Pure Data.
 
 ## System dependencies
 
-- Ruby 3.0
-- Ruby on Rails 6.1
+- Ruby 2.7.2+
+- Redis
+- PostgreSQL
 
 ## Setup
 
