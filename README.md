@@ -1,24 +1,29 @@
-# README
+# PatchCable
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+PatchCable is a proof-of-concept implementation of the Patcher family of visual
+audio programming, using the Web Audio API and backed by Ruby on Rails with
+Stimulus Reflex.
 
-Things you may want to cover:
+## System dependencies
 
-* Ruby version
+- Ruby 3.0
+- Ruby on Rails 6.1
 
-* System dependencies
+## Setup
 
-* Configuration
+```bash
+# Clone this repository
+git clone git@github.com:garrettmichaelgeorge/patch_cable.git
+cd patch_cable
 
-* Database creation
+# Turn on caching in development for StimulusReflex
+bin/rails dev:cache
 
-* Database initialization
+# Install dependencies
+bundle
+yarn
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Set up database
+bin/rails db:create
+bin/rails db:schema:load
+```
