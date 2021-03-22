@@ -5,6 +5,8 @@ development:
 
 test:
   adapter: test
+  url: <%= Rails.application.credentials.redis_url %>
+  channel_prefix: patch_cable_test
 
 production:
   adapter: redis
