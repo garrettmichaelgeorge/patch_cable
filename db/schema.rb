@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_19_233646) do
+ActiveRecord::Schema.define(version: 2021_03_23_203643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "boxes", force: :cascade do |t|
+    t.jsonb "settings"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "patch_id", null: false
+    t.index ["patch_id"], name: "index_boxes_on_patch_id"
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "destination_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["destination_id"], name: "index_lines_on_destination_id"
+    t.index ["source_id"], name: "index_lines_on_source_id"
+  end
 
   create_table "patches", force: :cascade do |t|
     t.string "name"
@@ -22,4 +39,7 @@ ActiveRecord::Schema.define(version: 2021_03_19_233646) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "boxes", "patches"
+  add_foreign_key "lines", "boxes", column: "destination_id"
+  add_foreign_key "lines", "boxes", column: "source_id"
 end
