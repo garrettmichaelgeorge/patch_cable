@@ -8,7 +8,6 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import "nexusui"
 import "../stylesheets/application.scss"
 
 Rails.start()
@@ -16,3 +15,10 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import "controllers"
+import "src"
+
+//attach a click listener
+// document.getElementById("start-audio").addEventListener('click', async () => {
+// 	await Tone.start()
+// 	console.log('Audio is ready')
+// })
