@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'redis', '~> 4.0'
 gem 'hiredis'
 gem 'redis-session-store'
+gem 'factory_bot_rails'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
