@@ -1,81 +1,27 @@
-<svg id="mySVG">
-  <line id="myLine" />
-</svg>
+<!-- <svg id="mySVG" data-controller="patch-cable"> -->
+<!--   <line id="myLine" /> -->
+<!-- </svg> -->
 
-<%= tag.div id: "patch_cable_demo", data: { controller: "patch-cable" } %>
+<%# tag.pc_button id: "start-audio", data: { controller: "nexus" } %>
+<%# tag.div id: "sine", data: { controller: "sine" } %>
 
 <header class="hero has-text-centered">
-  <ui-hero-body class="hero-body">
+  <pc-hero-body class="hero-body">
     <h1 class="title is-3">Patch View</h1>
     <h2 class="subtitle is-5"><%= @patch.name %></h2>
-  </ui-hero-body>
+  </pc-hero-body>
 </header>
 
 <section class="section">
-  <container class="container">
-    <%= tag.ui_button id: "start-audio", data: { controller: "nexus" } %>
-
-    <div class="tile is-ancestor">
-      <%= tile_column do %>
-        <%= tile_child do %>
-          <div id="toggle"></div>
-          <%= tag.div id: "source" %>
-        <% end %>
-        <%= tile_child do %>
-          <div id="number"></div>
-        <% end %>
-        <%= tile_child do %>
-          <div id="gain"></div>
-        <% end %>
-        <%= tile_child do %>
-          <%# tag.div data: { controller: "box" } %>
-          <%= tag.div id: "sine", data: { controller: "sine" } %>
-        <% end %>
-      <% end %>
-
-      <%= tile_column do %>
-        <%= tile_child do %>
-          <%= tag.ui_number id: "box100", data: { controller: "nexus" } %>
-        <% end %>
-        <%= tile_child do %>
-          <%= tag.ui_number id: "box101", data: { controller: "nexus" } %>
-        <% end %>
-        <%= tile_child do %>
-          <%= tag.ui_slider id: "box102", data: { controller: "nexus" } %>
-        <% end %>
-        <%= tile_child do %>
-          <p id="destination">DESTINATION</p>
-        <% end %>
-      <% end %>
-
-      <%= tile_column do %>
-        <%= tile_child do %>
-        <%= tag.ui_number id: "box200", data: { controller: "nexus" } %>
-        <% end %>
-        <%= tile_child do %>
-        <% end %>
-        <%= tile_child do %>
-        <%= tag.ui_slider id: "box202", data: { controller: "nexus" } %>
-        <% end %>
-        <%= tile_child do %>
-        <% end %>
-      <% end %>
-
-      <%= tile_column do %>
-        <%= tile_child do %>
-        <% end %>
-        <%= tile_child do %>
-        <% end %>
-        <%= tile_child do %>
-        <% end %>
-        <%= tile_child do %>
-        <% end %>
-      <% end %>
-    </div>
-
-    <%# tag.ui_slider id: "slider0", data: { controller: "nexus" } %>
-    <%# tag.ui_slider id: "slider1", data: { controller: "nexus" } %>
-    <%# tag.ui_text_button id: "button0", data: { controller: "nexus",
-           nexus_text_value: "Hello, world!" } %>
-  </container>
+  <%= tag.pc_canvas id: "pc-canvas",
+                       class: "container",
+                       style: "display: block; height: 80vh; background-color: #dddddd",
+                       data: { controller: "drag" } do %>
+    <%= tag.div id: "box",
+                class: "box",
+                style: "position: relative",
+                data: { action: token_list("mousedown->drag#drag",
+                                           "mousemove->drag#move",
+                                           "mouseup->drag#drop") } %>
+  <% end %>
 </section>
