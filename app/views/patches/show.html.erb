@@ -16,12 +16,16 @@
   <%= tag.pc_canvas id: "pc-canvas",
                        class: "container",
                        style: "display: block; height: 80vh; background-color: #dddddd",
-                       data: { controller: "drag" } do %>
+                       data: { controller: "drag",
+                               action: token_list("dragstart->drag#start",
+                                                  "dragover->drag#drag",
+                                                  "dragenter->drag#enter",
+                                                  "drop->drag#drop",
+                                                  "dragend->drag#end")} do %>
     <%= tag.div id: "box",
                 class: "box",
+                draggable: true,
                 style: "position: relative",
-                data: { action: token_list("mousedown->drag#drag",
-                                           "mousemove->drag#move",
-                                           "mouseup->drag#drop") } %>
+                data: {} %>
   <% end %>
 </section>
