@@ -19,12 +19,14 @@
                        data: { controller: "drag",
                                action: token_list("mousedown->drag#start",
                                                   "mousemove->drag#drag",
-                                                  "mouseup->drag#drop") } do %>
+                                                  "mouseup->drag#drop",
+                                                  "click->audio-context#start:once") } do %>
     <% (0..9).each do |i| %>
       <%= tag.div id: "box",
                   class: "box",
                   style: "height: 16px; width: 16px",
                   data: { draggable: true } do %>
+        <%= tag.div id: "box#{i}", data: { controller: "sine" } %>
       <% end %>
     <% end %>
   <% end %>
