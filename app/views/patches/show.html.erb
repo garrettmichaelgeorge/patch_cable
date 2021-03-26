@@ -1,6 +1,3 @@
-<!-- <svg id="mySVG" data-controller="patch-cable"> -->
-<!--   <line id="myLine" /> -->
-<!-- </svg> -->
 
 <%# tag.pc_button id: "start-audio", data: { controller: "nexus" } %>
 <%# tag.div id: "sine", data: { controller: "sine" } %>
@@ -14,19 +11,28 @@
 
 <section class="section">
   <%= tag.pc_canvas id: "pc-canvas",
-                       class: "container",
-                       style: "display: block; min-height: 100vh; width: 100%; background-color: #dddddd",
-                       data: { controller: "drag audio-context",
-                               action: token_list("mousedown->drag#start",
-                                                  "mousemove->drag#drag",
-                                                  "mouseup->drag#drop",
-                                                  "click->audio-context#start:once") } do %>
+                    class: "container pc-canvas",
+                    data: { controller: "drag audio-context",
+                            action: token_list("mousedown->drag#start",
+                                               "mousemove->drag#drag",
+                                               "mouseup->drag#drop",
+                                               "click->audio-context#start:once") } do %>
+    <%= tag.svg id="mySVG", data: { controller: "line",
+                                    action: "",
+                                    class: "pc-line-svg",
+                                    source_id: "box0",
+                                    destination_id: "box3" } do %>
+      <%= tag.line id: "myLine",
+                   class: "pc-line",
+                   data: { line_target: "line" } %>
+    <% end %>
+
     <% (0..9).each do |i| %>
-      <%= tag.div id: "box",
+      <%= tag.pc_box id: "box#{i}",
                   class: "box",
-                  style: "height: 16px; width: 16px",
+                  style: "height: 32px; width: 32px",
                   data: { draggable: true } do %>
-        <%= tag.div id: "box#{i}", data: { controller: "sine" } %>
+        <%= tag.pc_interface id: "interface#{i}", data: { controller: "sine" } %>
       <% end %>
     <% end %>
   <% end %>
