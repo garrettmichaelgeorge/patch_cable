@@ -16,7 +16,7 @@
   <%= tag.pc_canvas id: "pc-canvas",
                        class: "container",
                        style: "display: block; min-height: 100vh; width: 100%; background-color: #dddddd",
-                       data: { controller: "drag",
+                       data: { controller: "drag audio-context",
                                action: token_list("mousedown->drag#start",
                                                   "mousemove->drag#drag",
                                                   "mouseup->drag#drop",
