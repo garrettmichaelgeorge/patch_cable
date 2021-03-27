@@ -1,6 +1,16 @@
-<%= tag.pc_box id: "box_#{dom_id(box)}",
+<%= tag.pc_box id: dom_id(box),
                 class: "box pc-box",
-                data: { draggable: true } do %>
+                data: { draggable: true,
+                        box: box.to_sgid.to_s } do %>
+
+  <%= tag.button id: dom_class(box, :delete),
+                 class: "button",
+                 data: { reflex: "click->Box#delete",
+                         reflex_dataset: "combined" } do %>
+    &times;
+  <% end %>
+
   <%= tag.pc_interface id: "interface_#{dom_id(box)}",
                        data: { controller: "sine" } %>
+
 <% end %>

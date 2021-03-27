@@ -19,12 +19,25 @@ class BoxReflex < ApplicationReflex
   #   - reflex_id   - a UUIDv4 that uniquely identies each Reflex
 
   before_reflex do
-    @patch ||= Patch.find(element.dataset[:patch_id])
+    # throw :abort unless params[:id]
+
+    @patch ||= Patch.find(params[:id])
   end
 
   def create
     @patch.boxes.create
 
-    morph dom_id(@patch), render("patches/canvas", patch: @patch)
+    morph_patch
+  end
+
+  def delete
+    box = element.signed[:box]
+    box.delete
+
+    morph_patch
+  end
+
+  def morph_patch
+    morph dom_id(@patch), render(@patch, locals: { patch: @patch })
   end
 end

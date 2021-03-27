@@ -1,4 +1,3 @@
-
 <%# tag.pc_button id: "start-audio", data: { controller: "nexus" } %>
 <%# tag.div id: "sine", data: { controller: "sine" } %>
 
@@ -22,14 +21,28 @@
 <section class="section">
   <pc-container class="container">
 
-    <button id="box_creator"
+    <button id="<%= dom_class(@patch, :create) %>"
             class="button"
             data-reflex="click->Box#create"
             data-patch-id="<%= @patch.id %>">
       Create box
     </button>
 
-    <%= render "patches/canvas", patch: @patch %>
+    <%= tag.pc_patch id: dom_id(@patch),
+                      class: "pc-patch drag--droppable",
+                      data: { controller: "drag audio-context",
+                              drag_target: "droppable",
+                              drag_draggable_offset_value: { x: 0, y: 0 },
+                              drag_canvas_offset_value: { x: 0, y: 0 },
+                              drag_is_dragging_class: "drag--is-dragging",
+                              drag_droppable_class: "drag--droppable",
+                              drag_draggable_class: "drag--draggable",
+                              action: token_list("mousedown->drag#start",
+                                                 "mousemove->drag#drag",
+                                                 "mouseup->drag#drop",
+                                                 "click->audio-context#start:once") } do %>
+      <%= render @patch %>
+    <% end %>
 
  </pc-container>
 </section>
