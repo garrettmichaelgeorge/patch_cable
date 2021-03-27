@@ -1,0 +1,7 @@
+.drag--is-dragging .drag--draggable {
+  z-index: 1000
+}
+
+.drag--is-dragging.drag-droppable {
+  background-color: pink;
+}

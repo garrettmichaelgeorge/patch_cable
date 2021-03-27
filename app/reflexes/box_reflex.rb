@@ -17,22 +17,14 @@ class BoxReflex < ApplicationReflex
   #     - unsigned  - use an unsigned Global ID to map dataset attribute to a model  eg. element.unsigned[:foo]
   #   - cable_ready - a special cable_ready that can broadcast to the current visitor (no brackets needed)
   #   - reflex_id   - a UUIDv4 that uniquely identies each Reflex
-  #
-  # Example:
-  #
-  #   before_reflex do
-  #     # throw :abort # this will prevent the Reflex from continuing
-  #     # learn more about callbacks at https://docs.stimulusreflex.com/lifecycle
-  #   end
-  #
-  #   def example(argument=true)
-  #     # Your logic here...
-  #     # Any declared instance variables will be made available to the Rails controller and view.
-  #   end
-  #
-  # Learn more at: https://docs.stimulusreflex.com/reflexes#reflex-classes
 
-  def add
-    Patch.boxes.add
+  before_reflex do
+    @patch ||= Patch.find(element.dataset[:patch_id])
+  end
+
+  def create
+    @patch.boxes.create
+
+    morph dom_id(@patch), render("patches/canvas", patch: @patch)
   end
 end

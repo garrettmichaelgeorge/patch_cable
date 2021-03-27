@@ -3,7 +3,7 @@ class PatchesController < ApplicationController
   end
 
   def show
-    @patch = Patch.find(params[:id])
+    @patch ||= Patch.find(params[:id])
   end
 
   def create

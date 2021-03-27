@@ -1,0 +1,6 @@
+<%= tag.pc_box id: "box_#{dom_id(box)}",
+                class: "box pc-box",
+                data: { draggable: true } do %>
+  <%= tag.pc_interface id: "interface_#{dom_id(box)}",
+                       data: { controller: "sine" } %>
+<% end %>

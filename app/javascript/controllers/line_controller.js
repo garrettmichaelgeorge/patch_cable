@@ -1,43 +1,65 @@
-import Nexus from 'nexusui'
-import * as Tone from 'tone'
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
   static targets = [ "line" ]
-
-  initialize() {
+  static values = {
+    sourceId: Object,
+    destinationId: Object
   }
 
   connect () {
     // TODO: uncomment this after converting to a StimulusReflex controller
     // super.connect()
-    this.drawLines()
+
+    this.element[`${this.identifier}Controller`] = this
+
+    // Attach callback to endpoint nodes so lines are re-rendered whenever the
+    // the endpoints move
+    this.source = document.getElementById(this.sourceIdValue)
+    this.destination = document.getElementById(this.destinationIdValue)
+
+    source.dragController.register(this.endpointMoved)
+    destination.dragController.register(this.endpointMoved)
+
+//     this.draw()
   }
 
-  disconnect () {
+  disconnect() {
+    source.drag.unregister(this.draw)
   }
 
-  drawLines () {
-    const sourceId = this.element.getAttribute("data-source-id")
-    const source = document.getElementById(sourceId)
-    this.srcCoordinates = {
-      x: this._centerX(source),
-      y: this._centerY(source)
+  draw () {
+    this.sourceValue.coordinates = {
+      x: this._centerX(this.sourceValue.el),
+      y: this._centerY(this.sourceValue.el)
     }
 
-    const destId = this.element.getAttribute("data-destination-id")
-    const destination = document.getElementById(destId)
-    this.destCoordinates = {
-      x: this._centerX(destination),
-      y: this._centerY(destination)
+    this.destinationValue = {
+      el: document.getElementById(this.destinationId),
+      coordinates: {
+        x: this._centerX(this.destinationValue.el),
+        y: this._centerY(this.destinationValue.el)
+      }
     }
-
-    this.lineTarget.setAttribute("x1", this.srcCoordinates.x)
-    this.lineTarget.setAttribute("y1", this.srcCoordinates.y)
-    this.lineTarget.setAttribute("x2", this.destCoordinates.x)
-    this.lineTarget.setAttribute("y2", this.destCoordinates.y)
 
     console.log("Line drawn between:", source, destination)
+  }
+
+  sourceValueChanged(value) {
+    if (!(this.hasSourceTarget && this.hasDestinationTarget)) return
+
+    this.updateEndpoints()
+  }
+
+  endpointMoved(value) {
+    this.updateEndpoints()
+  }
+
+  updateEndpoints() {
+    this.lineTarget.setAttribute("x1", this.sourceValue.coordinates.x)
+    this.lineTarget.setAttribute("y1", this.sourceValue.coordinates.y)
+    this.lineTarget.setAttribute("x2", this.destinationValue.coordinates.x)
+    this.lineTarget.setAttribute("y2", this.destinationValue.coordinates.y)
   }
 
   _centerX(el) {
@@ -54,4 +76,3 @@ export default class extends Controller {
     return rect.top + (rect.height / 2)
   }
 }
-

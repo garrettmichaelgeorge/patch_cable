@@ -9,31 +9,27 @@
   </pc-hero-body>
 </header>
 
-<section class="section">
-  <%= tag.pc_canvas id: "pc-canvas",
-                    class: "container pc-canvas",
-                    data: { controller: "drag audio-context",
-                            action: token_list("mousedown->drag#start",
-                                               "mousemove->drag#drag",
-                                               "mouseup->drag#drop",
-                                               "click->audio-context#start:once") } do %>
-    <%= tag.svg id="mySVG", data: { controller: "line",
-                                    action: "",
-                                    class: "pc-line-svg",
-                                    source_id: "box0",
-                                    destination_id: "box3" } do %>
-      <%= tag.line id: "myLine",
-                   class: "pc-line",
-                   data: { line_target: "line" } %>
-    <% end %>
+<%= tag.svg id="mySVG", data: { controller: "line",
+                                action: "",
+                                class: "pc-line-svg",
+                                line_source_id_value: "box0",
+                                line_destination_id_value: "box3" } do %>
+  <%= tag.line id: "myLine",
+               class: "pc-line",
+               data: { line_target: "line" } %>
+<% end %>
 
-    <% (0..9).each do |i| %>
-      <%= tag.pc_box id: "box#{i}",
-                  class: "box",
-                  style: "height: 32px; width: 32px",
-                  data: { draggable: true } do %>
-        <%= tag.pc_interface id: "interface#{i}", data: { controller: "sine" } %>
-      <% end %>
-    <% end %>
-  <% end %>
+<section class="section">
+  <pc-container class="container">
+
+    <button id="box_creator"
+            class="button"
+            data-reflex="click->Box#create"
+            data-patch-id="<%= @patch.id %>">
+      Create box
+    </button>
+
+    <%= render "patches/canvas", patch: @patch %>
+
+ </pc-container>
 </section>
