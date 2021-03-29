@@ -14,25 +14,34 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <pc-hero class="hero is-fullheight-with-navbar is-dark">
+    <%= tag.header class: header_class do %>
 
-      <pc-hero-header class="hero-header">
-        <%= render "layouts/navbar" %>
-      </pc-hero-header>
+      <header class="hero-head">
+        <%= render "shared/navbar", cached: true %>
+      </header>
 
-      <pc-hero-body class="hero-body">
+      <main class="hero-body">
         <pc-container class="container">
-          <%= yield %>
+          <%= yield :header_body %>
         </pc-container>
-      </pc-hero-body>
+      </main>
 
-      <pc-hero-footer class="hero-footer">
-        <%= yield :footer %>
-      </pc-hero-footer>
+      <footer class="hero-foot">
+      </footer>
+    <% end %>
 
-    </pc-hero>
+    <main class="section">
+      <pc-container class="container">
+        <%= yield %>
+      </pc-container>
+    </main>
+
+      <footer id="footer" class="footer">
+        <%= render "shared/footer", cached: true %>
+      </footer>
   </body>
 </html>
