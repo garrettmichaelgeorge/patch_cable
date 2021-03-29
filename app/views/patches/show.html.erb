@@ -1,12 +1,37 @@
 <%# tag.pc_button id: "start-audio", data: { controller: "nexus" } %>
-<%# tag.div id: "sine", data: { controller: "sine" } %>
 
-<header class="hero has-text-centered">
-  <pc-hero-body class="hero-body">
-    <h1 class="title is-3">Patch View</h1>
-    <h2 class="subtitle is-5"><%= @patch.name %></h2>
-  </pc-hero-body>
-</header>
+<h1 class="title is-3">
+  <%= t ".title" %>
+</h1>
+<h2 class="subtitle is-5">
+  <%= t ".subtitle", patch_name: @patch.name %>
+</h2>
+
+
+  <button id="<%= dom_class(@patch, :create) %>"
+          class="button is-primary is-outlined"
+          data-reflex="click->Box#create"
+          data-patch-id="<%= @patch.id %>">
+          <%= t "helpers.submit.create", model: "Box" %>
+  </button>
+
+  <%= tag.pc_patch id: dom_id(@patch),
+          class: "pc-patch drag--droppable",
+          data: { controller: "drag audio-context",
+          drag_target: "droppable",
+          drag_draggable_offset_value: { x: 0, y: 0 },
+          drag_canvas_offset_value: { x: 0, y: 0 },
+          drag_is_dragging_class: "drag--is-dragging",
+          drag_droppable_class: "drag--droppable",
+          drag_draggable_class: "drag--draggable",
+          action: token_list("mousedown->drag#start",
+                                                    "mousemove->drag#drag",
+                                                     "mouseup->drag#drop",
+                                                      "click->audio-context#start:once") } do %>
+                                                      <%= render @patch %>
+                                                      <% end %>
+
+
 
 <%= tag.svg id="mySVG", data: { controller: "line",
                                 action: "",
@@ -17,32 +42,3 @@
                class: "pc-line",
                data: { line_target: "line" } %>
 <% end %>
-
-<section class="section">
-  <pc-container class="container">
-
-    <button id="<%= dom_class(@patch, :create) %>"
-            class="button"
-            data-reflex="click->Box#create"
-            data-patch-id="<%= @patch.id %>">
-      Create box
-    </button>
-
-    <%= tag.pc_patch id: dom_id(@patch),
-                      class: "pc-patch drag--droppable",
-                      data: { controller: "drag audio-context",
-                              drag_target: "droppable",
-                              drag_draggable_offset_value: { x: 0, y: 0 },
-                              drag_canvas_offset_value: { x: 0, y: 0 },
-                              drag_is_dragging_class: "drag--is-dragging",
-                              drag_droppable_class: "drag--droppable",
-                              drag_draggable_class: "drag--draggable",
-                              action: token_list("mousedown->drag#start",
-                                                 "mousemove->drag#drag",
-                                                 "mouseup->drag#drop",
-                                                 "click->audio-context#start:once") } do %>
-      <%= render @patch %>
-    <% end %>
-
- </pc-container>
-</section>

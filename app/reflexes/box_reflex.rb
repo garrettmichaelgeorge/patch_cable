@@ -19,7 +19,7 @@ class BoxReflex < ApplicationReflex
   #   - reflex_id   - a UUIDv4 that uniquely identies each Reflex
 
   before_reflex do
-    # throw :abort unless params[:id]
+    throw :abort unless params[:id]
 
     @patch ||= Patch.find(params[:id])
   end

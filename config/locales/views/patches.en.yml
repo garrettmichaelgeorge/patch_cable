@@ -1,0 +1,8 @@
+en:
+  patches:
+    index:
+      title: Patches
+      subtitle: Subtitle
+    show:
+      title: Patch View
+      subtitle: "%{patch_name}"

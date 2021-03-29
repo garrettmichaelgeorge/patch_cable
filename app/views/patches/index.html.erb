@@ -1,2 +1,15 @@
-<h1>Patches#index</h1>
-<p>Find me in app/views/patches/index.html.erb</p>
+<h1 class="title is-3">
+  <%= t ".title" %>
+</h1>
+
+<section class="section">
+  <pc-container class="container">
+    <% @patches.each do |patch| %>
+    <ul>
+      <li>
+        <%= link_to patch.name, patch_path(patch.id) %>
+      </li>
+    </ul>
+    <% end %>
+  </pc-container>
+</section>

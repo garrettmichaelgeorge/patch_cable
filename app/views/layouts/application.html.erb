@@ -17,6 +17,22 @@
   </head>
 
   <body>
-    <%= yield %>
+    <pc-hero class="hero is-fullheight-with-navbar is-dark">
+
+      <pc-hero-header class="hero-header">
+        <%= render "layouts/navbar" %>
+      </pc-hero-header>
+
+      <pc-hero-body class="hero-body">
+        <pc-container class="container">
+          <%= yield %>
+        </pc-container>
+      </pc-hero-body>
+
+      <pc-hero-footer class="hero-footer">
+        <%= yield :footer %>
+      </pc-hero-footer>
+
+    </pc-hero>
   </body>
 </html>

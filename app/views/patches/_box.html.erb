@@ -4,7 +4,7 @@
                         box: box.to_sgid.to_s } do %>
 
   <%= tag.button id: dom_class(box, :delete),
-                 class: "button",
+                 class: "button is-danger is-small",
                  data: { reflex: "click->Box#delete",
                          reflex_dataset: "combined" } do %>
     &times;

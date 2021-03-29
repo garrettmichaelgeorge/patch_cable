@@ -1,3 +1,6 @@
 <p><%= patch.boxes.count %></p>
 
-<%= render partial: "patches/box", collection: patch.boxes %>
+<%= tag.pc_boxes id: dom_class(patch.boxes),
+                 data: { controller: "box" } do %>
+  <%= render partial: "patches/box", collection: patch.boxes %>
+<% end %>

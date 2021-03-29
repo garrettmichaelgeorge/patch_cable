@@ -73,4 +73,9 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   config.action_cable.disable_request_forgery_protection = true
+
+  # Set log level to :warn and disable ActionCable logging entirely
+  # This improves performance and makes debugging easier
+  # config.log_level = :warn
+  # ActionCable.server.config.logger = Logger.new(nil)
 end
