@@ -1,9 +1,10 @@
-<h1 class="title is-3">
-  <%= t ".title" %>
-</h1>
+<%= content_for :header_body do %>
+  <%= render "shared/titles", title: t(".title"),
+                              subtitle: "All the patches" %>
+<% end %>
 
 <section class="section">
-  <pc-container class="container">
+  <pc-container class="container has-text-centered">
     <% @patches.each do |patch| %>
     <ul>
       <li>

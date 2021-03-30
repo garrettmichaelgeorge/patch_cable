@@ -2,5 +2,10 @@
 
 <%= tag.pc_boxes id: dom_class(patch.boxes),
                  data: { controller: "box" } do %>
-  <%= render partial: "patches/box", collection: patch.boxes %>
+  <%# render partial: "patches/box", collection: patch.boxes %>
+
+  <% patch.boxes.each do |box| %>
+    <%= box_component box %>
+  <% end %>
+
 <% end %>

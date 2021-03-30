@@ -3,11 +3,25 @@ module IconHelper
   ICON_TYPES = { solid: "fas",
                  brand: "fab" }.freeze
 
-  def icon_tag(name, type: :solid)
-    tag.icon_wrapper class: WRAPPER_CLASS do
-      tag.icon class: icon_class_for(name, type) do
-        yield if block_given?
-      end
+  def icon_tag(name, type: :solid, **opts)
+    icon_wrapper_tag(**opts) do
+      tag.icon class: icon_class_for(name, type)
+    end
+  end
+
+  def icon_text_tag(name, type: solid, **opts)
+    tag.icon_text class: "icon-text", **opts do
+      icon_tag(name, type)
+
+      yield
+    end
+  end
+
+  def icon_wrapper_tag(**opts)
+    css_class = token_list(WRAPPER_CLASS)
+
+    tag.icon_wrapper class: css_class, **opts do
+      yield
     end
   end
 

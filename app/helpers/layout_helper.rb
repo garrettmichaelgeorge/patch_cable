@@ -1,7 +1,11 @@
 module LayoutHelper
   def header_class
-    class_ary = ["hero", "is-dark"]
-    class_ary.push("is-fullheight") if content_for?(:header_body)
-    token_list(*class_ary)
+    header_size = if content_for?(:header_class)
+                    content_for(:header_class)
+                  else
+                    ""
+                  end
+
+    token_list("hero", "is-dark", header_size)
   end
 end
