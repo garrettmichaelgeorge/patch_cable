@@ -1,5 +1,13 @@
+<%= content_for :hero_class do %>
+  has-text-centered
+<% end %>
+
 <%= content_for :header_body do %>
-  <h1 class="title">
-    PatchCable
-  </h1>
+  <flex-container class="is-flex is-justify-content-center">
+    <glow-container class="is-glowing has-text-centered">
+      <h1 class="title is-1">
+        PatchCable
+      </h1>
+    </glow-container>
+  </flex-container>
 <% end %>
