@@ -3,11 +3,6 @@
                data: { draggable: true,
                        box: box.to_sgid.to_s } do %>
 
-  <%= tag.button id: dom_class(box, :delete),
-                 class: "delete is-small is-danger is-pulled-right",
-                 data: { reflex: "click->Box#delete",
-                         reflex_dataset: "combined" } %>
-
   <%= tag.pc_inlets class: "pc-inlets" do %>
     <% box.inlets.each do |inlet| %>
       <%= icon :circle, class: "is-small mr-1 is-draggable" %>
@@ -15,6 +10,11 @@
   <% end %>
 
   <%= component interface_component, box: box %>
+
+  <%= tag.button id: dom_class(box, :delete),
+                 class: "delete is-small is-danger is-pulled-right",
+                 data: { reflex: "click->Box#delete",
+                         reflex_dataset: "combined" } %>
 
   <%= tag.pc_outlets class: "pc-outlets" do %>
     <% box.outlets.each do |inlet| %>
