@@ -1,11 +1,18 @@
-<p><%= patch.boxes.count %></p>
+<%= tag.pc_patch_canvas id: dom_class(@patch, :canvas),
+                        class: "pc-patch-canvas has-background-grey p-4" do %>
 
-<%= tag.pc_boxes id: dom_class(patch.boxes),
-                 data: { controller: "box" } do %>
-  <%# render partial: "patches/box", collection: patch.boxes %>
+  <p>
+    <%= patch.boxes.count %>
+  </p>
 
-  <% patch.boxes.each do |box| %>
-    <%= box_component box %>
+  <%= tag.pc_boxes id: dom_class(patch.boxes),
+                   data: { controller: "box" } do %>
+    <%# render partial: "patches/box", collection: patch.boxes %>
+
+    <% patch.boxes.each do |box| %>
+      <%= component "box", box: box %>
+    <% end %>
+
   <% end %>
 
 <% end %>

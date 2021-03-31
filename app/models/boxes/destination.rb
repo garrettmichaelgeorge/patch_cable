@@ -1,0 +1,2 @@
+class Boxes::Destination
+end

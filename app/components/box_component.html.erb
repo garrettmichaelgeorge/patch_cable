@@ -1,0 +1,24 @@
+<%= tag.pc_box id: dom_id(box),
+               class: "box pc-box is-draggable",
+               data: { draggable: true,
+                       box: box.to_sgid.to_s } do %>
+
+  <%= tag.button id: dom_class(box, :delete),
+                 class: "delete is-small is-danger is-pulled-right",
+                 data: { reflex: "click->Box#delete",
+                         reflex_dataset: "combined" } %>
+
+  <%= tag.pc_inlets class: "pc-inlets" do %>
+    <% box.inlets.each do |inlet| %>
+      <%= icon :circle, class: "is-small mr-1 is-draggable" %>
+    <% end %>
+  <% end %>
+
+  <%= component interface_component, box: box %>
+
+  <%= tag.pc_outlets class: "pc-outlets" do %>
+    <% box.outlets.each do |inlet| %>
+      <%= icon :circle, class: "is-small is-draggable" %>
+    <% end %>
+  <% end %>
+<% end %>
