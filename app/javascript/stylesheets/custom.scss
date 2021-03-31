@@ -1,7 +1,6 @@
 @import "./drag";
 
-.pc-patch {
-  display: block;
+.pc-patch-canvas {
   min-height: 100vh;
   width: 100%;
 }
@@ -24,4 +23,21 @@
 .pc-line {
   stroke-width: 2px;
   stroke: #000000;
+}
+
+.pc-inlets, .pc-outlets {
+  position: relative;
+}
+
+.pc-inlets {
+  top: -2rem;
+  left: 28%;
+}
+
+.pc-inlet, .pc-outlet {
+  margin: 0 0.5em;
+}
+
+.pc-outlets {
+  top: 2rem;
 }
