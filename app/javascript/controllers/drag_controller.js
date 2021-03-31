@@ -25,9 +25,7 @@ export default class extends Controller {
     if (!this._isDraggable(event.target)) return
 
     event.preventDefault()
-
     event.target.setAttribute("data-drag-target", "draggable")
-
     this.isDraggingValue = true
 
     this.draggableOffsetValue = {
@@ -51,9 +49,7 @@ export default class extends Controller {
     }
 
     // if (!this.elementBelowDraggable) return;
-
     // const closestDroppable = this.elementBelowDraggable
-
     // if (closestDroppable != this.droppableTarget) return
   }
 
