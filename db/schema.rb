@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_174448) do
+ActiveRecord::Schema.define(version: 2021_03_31_200239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,16 +20,34 @@ ActiveRecord::Schema.define(version: 2021_03_30_174448) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "patch_id", null: false
+    t.integer "inlets_count"
+    t.integer "outlets_count"
     t.index ["patch_id"], name: "index_boxes_on_patch_id"
   end
 
-  create_table "lines", force: :cascade do |t|
-    t.bigint "source_id", null: false
-    t.bigint "destination_id", null: false
+  create_table "inlets", force: :cascade do |t|
+    t.bigint "box_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["destination_id"], name: "index_lines_on_destination_id"
-    t.index ["source_id"], name: "index_lines_on_source_id"
+    t.integer "lines_count"
+    t.index ["box_id"], name: "index_inlets_on_box_id"
+  end
+
+  create_table "lines", id: false, force: :cascade do |t|
+    t.bigint "inlet_id", null: false
+    t.bigint "outlet_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inlet_id"], name: "index_lines_on_inlet_id"
+    t.index ["outlet_id"], name: "index_lines_on_outlet_id"
+  end
+
+  create_table "outlets", force: :cascade do |t|
+    t.bigint "box_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "lines_count"
+    t.index ["box_id"], name: "index_outlets_on_box_id"
   end
 
   create_table "patches", force: :cascade do |t|
@@ -40,6 +58,6 @@ ActiveRecord::Schema.define(version: 2021_03_30_174448) do
   end
 
   add_foreign_key "boxes", "patches"
-  add_foreign_key "lines", "boxes", column: "destination_id"
-  add_foreign_key "lines", "boxes", column: "source_id"
+  add_foreign_key "inlets", "boxes"
+  add_foreign_key "outlets", "boxes"
 end

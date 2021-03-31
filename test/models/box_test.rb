@@ -4,27 +4,22 @@ class BoxTest < ActiveSupport::TestCase
   subject { Box.new }
 
   context "associations" do
-    # should have_many(:outlet_lines).inverse_of(:source)
-    # should have_many(:inlet_lines).inverse_of(:destination)
     should belong_to(:patch).inverse_of(:boxes)
-  end
-
-  context "delegations" do
-    should delegate_method(:count).to(:inlets).with_prefix(true)
-    should delegate_method(:count).to(:outlets).with_prefix(true)
+    should have_many(:inlets).inverse_of(:box).dependent(:destroy)
+    should have_many(:outlets).inverse_of(:box).dependent(:destroy)
   end
 
   should serialize(:settings)
 
   describe "#inlets_count" do
-    it "returns an array with 2 items" do
-      _(subject.inlets_count).must_equal 2, "#{subject} should have 2 inlets"
+    it "exists" do
+      _(subject).must_respond_to :inlets_count
     end
   end
 
   describe "#outlets_count" do
-    it "returns an empty array" do
-      assert_predicate subject.outlets_count, :zero?, "#{subject} should have no outlets"
+    it "exists" do
+      _(subject).must_respond_to :outlets_count
     end
   end
 end

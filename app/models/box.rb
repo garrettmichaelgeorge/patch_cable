@@ -2,19 +2,10 @@ class Box < ApplicationRecord
   serialize :settings
 
   belongs_to :patch, inverse_of: :boxes
-
-  delegate :count, to: :inlets, prefix: true
-  delegate :count, to: :outlets, prefix: true
+  has_many :inlets, inverse_of: :box, dependent: :destroy
+  has_many :outlets, inverse_of: :box, dependent: :destroy
 
   def type
     "destination"
-  end
-
-  def inlets
-    [:foo, :bar]
-  end
-
-  def outlets
-    []
   end
 end
