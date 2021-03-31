@@ -1,17 +1,23 @@
 {
   "app/components/*_component.rb": {
+    "type": "component",
+    "affinity": "model",
     "related": [
       "app/components/{}_component.html.erb",
       "app/components/{}_component.html.haml"
     ]
   },
   "app/test/components/*.component_test.rb": {
+    "type": "componenttest",
+    "affinity": "model",
     "related": [
       "app/components/{}_component.html.erb",
       "app/components/{}_component.html.haml"
     ]
   },
   "app/components/*_component.html.erb": {
+    "type": "componentview",
+    "affinity": "model",
     "test": "test/components/{}_component_test.rb",
     "related": "app/components/{}_component.rb"
   },
@@ -21,5 +27,20 @@
   },
   "test/factories.rb": {
     "task": "factory_bot:lint"
+  },
+  "app/javascript/stylesheets/*": {
+    "type": "stylesheet",
+    "related": [
+      "app/javascript/stylesheets/application.scss"
+    ]
+  },
+  "app/javascript/packs/*.js": {
+    "type": "pack"
+  },
+  "app/javascript/controllers/*_controller.js": {
+    "type": "stimuluscontroller"
+  },
+  "app/javascript/src/*.js": {
+    "type": "src"
   }
 }
