@@ -1,6 +1,11 @@
+<%= content_for :header_class do %>
+  is-large
+<% end %>
+
 <%= content_for :header_body do %>
-  <%= render "shared/titles", title: t(".title"),
-                              subtitle: "All the patches" %>
+  <%= component :neon_sign do %>
+    <%= t(".title") %>
+  <% end %>
 <% end %>
 
 <section class="section">
