@@ -1,0 +1,25 @@
+{
+  "app/components/*_component.rb": {
+    "related": [
+      "app/components/{}_component.html.erb",
+      "app/components/{}_component.html.haml"
+    ]
+  },
+  "app/test/components/*.component_test.rb": {
+    "related": [
+      "app/components/{}_component.html.erb",
+      "app/components/{}_component.html.haml"
+    ]
+  },
+  "app/components/*_component.html.erb": {
+    "test": "test/components/{}_component_test.rb",
+    "related": "app/components/{}_component.rb"
+  },
+  "app/components/*_component.html.haml": {
+    "test": "test/components/{}_component_test.rb",
+    "related": "app/components/{}_component.rb"
+  },
+  "test/factories.rb": {
+    "task": "factory_bot:lint"
+  }
+}
