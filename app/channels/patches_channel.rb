@@ -1,6 +1,6 @@
 class PatchesChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "patches_channel"
+    stream_from "patches"
   end
 
   def unsubscribed
