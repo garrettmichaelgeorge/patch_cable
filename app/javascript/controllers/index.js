@@ -3,12 +3,21 @@
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
-import StimulusReflex from 'stimulus_reflex'
-import consumer from '../channels/consumer'
-import controller from '../controllers/application_controller'
+import StimulusReflex from "stimulus_reflex"
+import consumer from "../channels/consumer"
+import controller from "../controllers/application_controller"
+import Radiolabel from "radiolabel"
 
 const application = Application.start()
 const context = require.context("controllers", true, /_controller\.js$/)
 application.load(definitionsFromContext(context))
 StimulusReflex.initialize(application, { consumer, controller, isolate: true })
-StimulusReflex.debug = process.env.RAILS_ENV === 'development'
+
+if (process.env.RAILS_ENV === "development") {
+  StimulusReflex.debug = true
+
+  // Manually register Radiolabel as a Stimulus controller in development only
+  import("radiolabel").then(Radiolabel =>
+    application.register("radiolabel", Radiolabel.default)
+  )
+}
