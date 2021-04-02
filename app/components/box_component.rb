@@ -11,11 +11,8 @@ class BoxComponent < ApplicationComponent
 
   attr_reader :box
 
-  def interface_component
+  def interface_component_name
     "interfaces/#{box.type}"
-  end
-
-  def delete_button
   end
 
   class BoxWrapperComponent < ApplicationComponent

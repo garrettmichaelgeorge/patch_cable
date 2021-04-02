@@ -1,6 +1,6 @@
-import { Controller } from 'stimulus'
+import ApplicationController from "./application_controller"
 
-export default class extends Controller {
+export default class extends ApplicationController {
   static targets = [ "line" ]
   static values = {
     sourceId: Object,
@@ -8,8 +8,7 @@ export default class extends Controller {
   }
 
   connect () {
-    // TODO: uncomment this after converting to a StimulusReflex controller
-    // super.connect()
+    super.connect()
 
     this.element[`${this.identifier}Controller`] = this
 
@@ -18,14 +17,13 @@ export default class extends Controller {
     this.source = document.getElementById(this.sourceIdValue)
     this.destination = document.getElementById(this.destinationIdValue)
 
-    source.dragController.register(this.endpointMoved)
-    destination.dragController.register(this.endpointMoved)
+    // source.dragController.register(this.endpointMoved)
+    // destination.dragController.register(this.endpointMoved)
 
-//     this.draw()
+    this.draw()
   }
 
   disconnect() {
-    source.drag.unregister(this.draw)
   }
 
   draw () {
@@ -46,7 +44,7 @@ export default class extends Controller {
   }
 
   sourceValueChanged(value) {
-    if (!(this.hasSourceTarget && this.hasDestinationTarget)) return
+    // if (!(this.hasSourceTarget && this.hasDestinationTarget)) return
 
     this.updateEndpoints()
   }
@@ -56,10 +54,10 @@ export default class extends Controller {
   }
 
   updateEndpoints() {
-    this.lineTarget.setAttribute("x1", this.sourceValue.coordinates.x)
-    this.lineTarget.setAttribute("y1", this.sourceValue.coordinates.y)
-    this.lineTarget.setAttribute("x2", this.destinationValue.coordinates.x)
-    this.lineTarget.setAttribute("y2", this.destinationValue.coordinates.y)
+    // this.lineTarget.setAttribute("x1", this.sourceValue.coordinates.x)
+    // this.lineTarget.setAttribute("y1", this.sourceValue.coordinates.y)
+    // this.lineTarget.setAttribute("x2", this.destinationValue.coordinates.x)
+    // this.lineTarget.setAttribute("y2", this.destinationValue.coordinates.y)
   }
 
   _centerX(el) {

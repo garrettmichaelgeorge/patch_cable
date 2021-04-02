@@ -1,6 +1,6 @@
 .drag--is-dragging
   .drag--draggable 
-    z-index: 1000
+    z-index: map-get($zindex, draggable)
     cursor: grabbing
 
 .drag--is-dragging.drag-droppable 
@@ -21,10 +21,10 @@
     width: 100%
     height: 100%
     border-radius: 50%
-    background: $orange
+    // background: $orange
     transition: box-shadow 3s
     transform: scale(.9)
-    z-index: -1
+    z-index: map-get($zindex, shadow)
 
   &:hover 
     color: #ffa502
@@ -35,4 +35,4 @@
       transform: scale(1.2)
       box-shadow: 0 0 15px $orange
       filter: blur(3px)
-      z-index: -1
+      z-index: map-get($zindex, shadow)

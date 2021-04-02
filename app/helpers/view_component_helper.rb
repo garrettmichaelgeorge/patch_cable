@@ -2,6 +2,11 @@
 # https://railsbytes.com/templates/xjNsDY
 
 module ViewComponentHelper
+  # OPTIMIZE: DRY out the duplication in these two methods
+  # Usage:
+  # <%= component :my_component, pickles: pickles %>
+  # <%= component "products/pickle", product: product %>
+  # <%= component "products/pickle", product: product %>
   def component(name, context: nil, **args, &block)
     cache_keys = Array(args.delete(:cache))
 
@@ -11,6 +16,16 @@ module ViewComponentHelper
       else
         return render component_class_for(name).new(args), &block
       end
+    end
+  end
+
+  # Usage:
+  # <%= component_with_collection :my_component, collection: pickles %>
+  def component_with_collection(name, collection:, context: nil, **args, &block)
+    cache_keys = Array(args.delete(:cache))
+
+    cache_if cache_keys.present?, cache_keys do
+      return render(component_class_for(name).with_collection(collection, args), &block)
     end
   end
 

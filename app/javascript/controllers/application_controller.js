@@ -36,6 +36,7 @@ export default class extends Controller {
 
   beforeReflex (element, reflex, noop, reflexId) {
     // document.body.classList.add('wait')
+    document.body.classList.add("is-waiting")
   }
 
   reflexSuccess (element, reflex, noop, reflexId) {
@@ -52,6 +53,7 @@ export default class extends Controller {
 
   afterReflex (element, reflex, noop, reflexId) {
     // document.body.classList.remove('wait')
+    document.body.classList.remove("is-waiting")
   }
 
   finalizeReflex (element, reflex, noop, reflexId) {

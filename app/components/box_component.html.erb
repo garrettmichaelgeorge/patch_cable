@@ -1,24 +1,40 @@
 <%= tag.pc_box id: dom_id(box),
                class: "box pc-box is-draggable",
+               style: "left: #{box.x}px; top: #{box.y}px",
                data: { draggable: true,
-                       box: box.to_sgid.to_s } do %>
+                       controller: "box",
+                       x: box.x,
+                       y: box.y,
+                       box_target: "box",
+                       box: box.sgid } do %>
 
   <%= tag.pc_inlets class: "pc-inlets" do %>
     <% box.inlets.each do |inlet| %>
-      <%= icon :circle, class: "is-small mr-1 is-draggable" %>
+
+        <%= tag.pc_inlet id: dom_id(inlet) do %>
+          <%= icon :circle, class: "is-small mr-1 is-draggable" %>
+        <% end %>
+
     <% end %>
   <% end %>
 
-  <%= component interface_component, box: box %>
+  <%= component interface_component_name, box: box %>
 
-  <%= tag.button id: dom_class(box, :delete),
-                 class: "delete is-small is-danger is-pulled-right",
-                 data: { reflex: "click->Box#delete",
+  <p>
+    <%= box.id %>
+  </p>
+
+  <%= tag.button class: "delete is-small is-danger is-pulled-right",
+                 data: { reflex: "click->Box#destroy",
                          reflex_dataset: "combined" } %>
 
   <%= tag.pc_outlets class: "pc-outlets" do %>
-    <% box.outlets.each do |inlet| %>
-      <%= icon :circle, class: "is-small is-draggable" %>
+    <% box.outlets.each do |outlet| %>
+
+      <%= tag.pc_outlet id: dom_id(outlet) do %>
+        <%= icon :circle, class: "is-small is-draggable" %>
+      <% end %>
+
     <% end %>
   <% end %>
 <% end %>

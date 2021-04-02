@@ -1,18 +1,35 @@
-<%= tag.pc_patch_canvas id: dom_class(@patch, :canvas),
+<%= tag.pc_patch_canvas id: dom_id(patch),
                         class: "pc-patch-canvas has-background-grey p-4" do %>
-
-  <p>
-    <%= patch.boxes.count %>
-  </p>
-
-  <%= tag.pc_boxes id: dom_class(patch.boxes),
+  <%= tag.pc_boxes id: "boxes",
                    data: { controller: "box" } do %>
-    <%# render partial: "patches/box", collection: patch.boxes %>
+    <p>
+      <%= patch.boxes.count %>
+    </p>
 
-    <% patch.boxes.each do |box| %>
-      <%= component "box", box: box %>
-    <% end %>
+    <%= component_with_collection "box", cache: patch.boxes, collection: patch.boxes %>
 
   <% end %>
+
+    <% patch.boxes.each do |box| %>
+      <% box.destination_lines.each do |line| %>
+
+        <%= tag.svg id: dom_id(line),
+                    class: "pc-line-container",
+                    data: { controller: "line",
+                            action: "",
+                            class: "pc-line-svg",
+                            line_source_id_value: dom_id(line.source),
+                            line_destination_id_value: dom_id(line.destination) } do %>
+
+
+          <%= tag.line class: "pc-line",
+                       x1: box.x,
+                       y1: box.y,
+                       x2: line.destination.box.x,
+                       y2: line.destination.box.y,
+                       data: { line_target: "line" } %>
+        <% end %>
+      <% end %>
+    <% end %>
 
 <% end %>

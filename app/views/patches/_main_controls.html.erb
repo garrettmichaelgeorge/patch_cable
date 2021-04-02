@@ -1,13 +1,16 @@
 <%= tag.fieldset class: "menu is-clipped is-w-min-content has-background-light" do %>
   <ul class="menu-list">
+
     <li>
       <button id="<%= dom_class(patch, :create) %>"
               class="button"
+              data-controller="box"
               data-reflex="click->Box#create"
               data-patch-id="<%= patch.id %>">
         <%= icon_tag :plus, class: "is-small" %>
       </button>
     </li>
+
     <li>
       <button id=""
               class="button">
@@ -16,6 +19,7 @@
         </span>
       </button>
     </li>
+
     <li>
       <button class="button">
         <span class="icon is-small">
@@ -23,5 +27,6 @@
         </span>
       </button>
     </li>
+
   </ul>
 <% end %>

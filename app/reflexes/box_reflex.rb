@@ -27,17 +27,35 @@ class BoxReflex < ApplicationReflex
   def create
     @patch.boxes.create
 
-    morph_patch
+    morph dom_id(@patch), render(partial: "patches/patch",
+                                 locals: { patch: @patch })
   end
 
-  def delete
+  def destroy
     box = element.signed[:box]
-    box.delete
+    destroyed_box_id = dom_id(box)
 
-    morph_patch
+    box.destroy
+
+    morph :nothing
+
+    cable_ready.remove(selector: destroyed_box_id)
+               .broadcast
   end
 
-  def morph_patch
-    morph dom_id(@patch), render(@patch, locals: { patch: @patch })
+  def move
+    box = element.signed[:box]
+
+    box.update({
+      x: element.dataset.x,
+      y: element.dataset.y
+    })
+
+    morph :nothing
+
+    cable_ready.console_log(
+      message: "Box position saved: #{box.x}, #{box.y}",
+      level: "info"
+    )
   end
 end

@@ -17,7 +17,8 @@
     <%= javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body data-controller="radiolabel">
+  <body data-controller="radiolabel application"
+        data-application-is-waiting-class="is-waiting">
     <%= tag.header class: header_class do %>
 
       <header class="hero-head">

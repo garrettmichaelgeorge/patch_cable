@@ -1,10 +1,14 @@
 class PatchesController < ApplicationController
   def index
-    @patches ||= Patch.all
+    @patches ||= Patch.includes(boxes: [:inlets, :outlets]).all
   end
 
   def show
     @patch ||= Patch.find(params[:id])
+
+    if @stimulus_reflex
+      render layout: false
+    end
   end
 
   def create

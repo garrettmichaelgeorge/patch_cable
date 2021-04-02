@@ -1,26 +1,32 @@
+@import "zindex"
+
 .pc-patch-canvas 
   min-height: 100vh
   width: 100%
+  z-index: map-get($zindex, canvas)
 
 .pc-box 
   height: auto
   width: intrinsic
   position: absolute
   display: flex
+  z-index: map-get($zindex, box)
 
   .pc-interface
 
-.pc-line-svg 
+.pc-line-container
+  user-select: none
   position: absolute
   top: 0
   left: 0
   width: 100%
-  height: 100vh
-  z-index: 100
+  height: 100%
+  z-index: map-get($zindex, lineContainer)
 
 .pc-line 
   stroke-width: 2px
   stroke: #000000
+  z-index: map-get($zindex, line)
 
 .pc-inlets, .pc-outlets 
   position: relative

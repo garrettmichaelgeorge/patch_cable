@@ -1,0 +1,6 @@
+// Add misc. styles here until they are ready to be refactored (probably into
+// ./components)
+
+body.is-waiting, body.is-waiting * {
+  cursor: wait !important;
+}

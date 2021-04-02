@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_200239) do
+ActiveRecord::Schema.define(version: 2021_04_01_235554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_03_31_200239) do
     t.bigint "patch_id", null: false
     t.integer "inlets_count"
     t.integer "outlets_count"
+    t.integer "x", default: 0, null: false
+    t.integer "y", default: 0, null: false
     t.index ["patch_id"], name: "index_boxes_on_patch_id"
   end
 
@@ -55,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_03_31_200239) do
     t.string "author"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "boxes_count"
   end
 
   add_foreign_key "boxes", "patches"
