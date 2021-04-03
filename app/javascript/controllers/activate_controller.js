@@ -22,16 +22,12 @@ export default class extends Controller {
   }
 
   _activateAll () {
-    console.log("Activating!")
-
     this.activatableTargets.forEach(target => {
       this._activate(target)
     })
   }
 
   _deactivateAll () {
-    console.log("Deactivating!")
-
     this.activatableTargets.forEach(target => {
       this._deactivate(target)
     })
