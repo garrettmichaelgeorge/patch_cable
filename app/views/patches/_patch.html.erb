@@ -1,5 +1,5 @@
 <%= tag.pc_patch_canvas id: dom_id(patch),
-                        class: "pc-patch-canvas has-background-grey p-4" do %>
+                        class: "pc-patch-canvas has-background-grey" do %>
   <%= tag.pc_boxes id: "boxes",
                    data: { controller: "box" } do %>
     <p>
@@ -10,26 +10,18 @@
 
   <% end %>
 
-    <% patch.boxes.each do |box| %>
-      <% box.destination_lines.each do |line| %>
-
-        <%= tag.svg id: dom_id(line),
-                    class: "pc-line-container",
-                    data: { controller: "line",
-                            action: "",
-                            class: "pc-line-svg",
-                            line_source_id_value: dom_id(line.source),
-                            line_destination_id_value: dom_id(line.destination) } do %>
-
-
-          <%= tag.line class: "pc-line",
-                       x1: box.x,
-                       y1: box.y,
-                       x2: line.destination.box.x,
-                       y2: line.destination.box.y,
-                       data: { line_target: "line" } %>
-        <% end %>
+  <%= tag.pc_lines id: "lines_container",
+                   class: "pc-line-container" do %>
+    <svg
+      id="lines_svg"
+      width="100%"
+      height="100%"
+      class="pc-line-svg" 
+    >
+      <% patch.boxes.each do |box| %>
+        <%= component_with_collection :line, collection: box.destination_lines %>
       <% end %>
-    <% end %>
+    </svg>
+  <% end %>
 
 <% end %>

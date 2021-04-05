@@ -1,4 +1,5 @@
 import ApplicationController from "./application_controller"
+import debounce from "lodash/debounce"
 
 export default class extends ApplicationController {
   static targets = [ "box" ]
@@ -8,21 +9,20 @@ export default class extends ApplicationController {
 
     this.element[`${this.identifier}Controller`] = this
 
-    this.element.moveCallbackController = this
-
-    this.boxTargets.forEach(box => {
-    })
+    this.targetMoved = debounce(this.targetMoved, 1000)
+    this.observer = new MutationObserver(this.targetMoved.bind(this))
+    this.observer.observe(this.element, this.observerConfig)
   }
 
   disconnect () {
-    super.disconnect()
+    this.observer.disconnect()
   }
 
   move () {
     this.stimulate("Box#move")
   }
 
-  elementMoved () {
+  targetMoved (mutationRecords) {
     this.move()
   }
 
@@ -36,5 +36,15 @@ export default class extends ApplicationController {
 
   afterCreate(element) {
     element.classList.remove("is-loading", "is-primary")
+  }
+
+  get observerConfig () {
+    return {
+      childList: false,
+      subtree: false,
+      attributes: true,
+      attributeFilter: ["data-x", "data-y"],
+      characterData: false
+    }
   }
 }

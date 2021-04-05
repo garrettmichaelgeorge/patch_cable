@@ -1,12 +1,6 @@
 <%= content_for :header_class do %>
-  is-small
+  is-hidden
 <% end %>
-
-<%= content_for :header_body do %>
-  <%= render "shared/titles", title: t(".title"),
-                              subtitle: t(".subtitle", patch_name: @patch.name) %>
-<% end %>
-
 
 <%= tag.pc_patch id: dom_class(@patch, :container),
                  class: "pc-patch drag--droppable is-flex",

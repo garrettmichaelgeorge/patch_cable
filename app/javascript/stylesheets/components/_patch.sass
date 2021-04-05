@@ -1,6 +1,7 @@
 @import "zindex"
 
 .pc-patch-canvas 
+  position: relative
   min-height: 100vh
   width: 100%
   z-index: map-get($zindex, canvas)
@@ -12,20 +13,15 @@
   display: flex
   z-index: map-get($zindex, box)
 
-  .pc-interface
-
 .pc-line-container
   user-select: none
-  position: absolute
-  top: 0
-  left: 0
   width: 100%
   height: 100%
   z-index: map-get($zindex, lineContainer)
 
 .pc-line 
   stroke-width: 2px
-  stroke: #000000
+  stroke: $black
   z-index: map-get($zindex, line)
 
 .pc-inlets, .pc-outlets 
@@ -36,7 +32,8 @@
 
 .pc-inlets 
   top: -2rem
-  left: 28%
+  left: 30%
 
 .pc-outlets 
   top: 2rem
+  left: -40%

@@ -1,5 +1,5 @@
 class Box < ApplicationRecord
-  after_update :broadcast_box
+  after_update :refresh_box
   before_create :add_inlets_and_outlets
 
   serialize :settings
@@ -18,12 +18,8 @@ class Box < ApplicationRecord
 
   private
 
-  # TODO: extract into an ActiveJob
-  def broadcast_box
-    cable_ready[PatchesChannel].inner_html(
-      selector: dom_id(self),
-      html: render(BoxComponent.new(box: self))
-    ).broadcast_to(self)
+  def refresh_box
+    RefreshBoxJob.perform_now(box: self)
   end
 
   def add_inlets_and_outlets

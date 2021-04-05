@@ -1,10 +1,9 @@
 import ApplicationController from "./application_controller"
 
 export default class extends ApplicationController {
-  static targets = [ "line" ]
   static values = {
-    sourceId: Object,
-    destinationId: Object
+    sourceId: String,
+    destinationId: String
   }
 
   connect () {
@@ -12,65 +11,99 @@ export default class extends ApplicationController {
 
     this.element[`${this.identifier}Controller`] = this
 
-    // Attach callback to endpoint nodes so lines are re-rendered whenever the
-    // the endpoints move
-    this.source = document.getElementById(this.sourceIdValue)
-    this.destination = document.getElementById(this.destinationIdValue)
-
-    // source.dragController.register(this.endpointMoved)
-    // destination.dragController.register(this.endpointMoved)
-
-    this.draw()
+    this.patchCanvas = document.querySelector(".pc-patch-canvas")
   }
 
-  disconnect() {
+  disconnect () {
+    this.sourceObserver.disconnect()
+    this.destinationObserver.disconnect()
   }
 
-  draw () {
-    this.sourceValue.coordinates = {
-      x: this._centerX(this.sourceValue.el),
-      y: this._centerY(this.sourceValue.el)
+  sourceMoved (mutationRecords) {
+    mutationRecords.forEach(_mutation => {
+      this.drawSource()
+    })
+  }
+
+  destinationMoved (mutationRecords) {
+    mutationRecords.forEach(mutation => {
+      if (!["data-x", "data-y"].includes(mutation.attributeName)) return
+
+      this.drawDestination()
+    })
+  }
+
+  drawSource () {
+    this.element.setAttribute("x1", this.sourcePosition.x)
+    this.element.setAttribute("y1", this.sourcePosition.y)
+  }
+
+  drawDestination () {
+    this.element.setAttribute("x2", this.destinationPosition.x)
+    this.element.setAttribute("y2", this.destinationPosition.y)
+  }
+
+  sourceIdValueChanged (id) {
+    this.sourceElement = document.getElementById(id)
+
+    this.sourceObserver = new MutationObserver(this.sourceMoved.bind(this))
+    this.sourceObserver.observe(this.sourceBox, this.observerConfig)
+
+    console.log("Source ID changed!", this.element, this.sourceElement)
+  }
+
+  destinationIdValueChanged (id) {
+    this.destinationElement = document.getElementById(id)
+
+    this.destinationObserver = new MutationObserver(this.destinationMoved.bind(this))
+    this.destinationObserver.observe(this.destinationBox, this.observerConfig)
+
+    console.log("Destination ID changed!", this.element, this.destinationElement)
+  }
+
+  get sourceBox () {
+    // HACK: LineController should not know this much about the internals of the
+    // source element
+    return this.sourceElement.parentElement
+                             .parentElement
+  }
+
+  get destinationBox () {
+    // HACK: LineController should not know this much about the internals of the
+    // destination element
+    return this.destinationElement.parentElement
+                                  .parentElement
+  }
+
+  get observerConfig () {
+    return {
+      childList: false,
+      subtree: false,
+      attributes: true,
+      attributeFilter: ["data-x", "data-y"],
+      characterData: false
     }
+  }
 
-    this.destinationValue = {
-      el: document.getElementById(this.destinationId),
-      coordinates: {
-        x: this._centerX(this.destinationValue.el),
-        y: this._centerY(this.destinationValue.el)
-      }
+  get sourcePosition () {
+    return {
+      x: this.sourceElement.getBoundingClientRect().left + (this.sourceElement.getBoundingClientRect().width / 2) - this.patchCanvasLeft,
+      y: this.sourceElement.getBoundingClientRect().top + (this.sourceElement.getBoundingClientRect().height / 2) - this.patchCanvasTop
     }
-
-    console.log("Line drawn between:", source, destination)
   }
 
-  sourceValueChanged(value) {
-    // if (!(this.hasSourceTarget && this.hasDestinationTarget)) return
-
-    this.updateEndpoints()
+  get destinationPosition () {
+    return {
+      x: this.destinationElement.getBoundingClientRect().left + (this.destinationElement.getBoundingClientRect().width / 2) - this.patchCanvasLeft,
+      y: this.destinationElement.getBoundingClientRect().top + (this.destinationElement.getBoundingClientRect().height / 2) - this.patchCanvasTop
+    }
   }
 
-  endpointMoved(value) {
-    this.updateEndpoints()
+  get patchCanvasTop () {
+    return this.patchCanvas.offsetTop;
   }
 
-  updateEndpoints() {
-    // this.lineTarget.setAttribute("x1", this.sourceValue.coordinates.x)
-    // this.lineTarget.setAttribute("y1", this.sourceValue.coordinates.y)
-    // this.lineTarget.setAttribute("x2", this.destinationValue.coordinates.x)
-    // this.lineTarget.setAttribute("y2", this.destinationValue.coordinates.y)
-  }
-
-  _centerX(el) {
-    if (!el) return
-
-    const rect = el.getBoundingClientRect()
-    return rect.left + (rect.width / 2)
-  }
-
-  _centerY(el) {
-    if (!el) return
-
-    const rect = el.getBoundingClientRect()
-    return rect.top + (rect.height / 2)
+  get patchCanvasLeft () {
+    return this.patchCanvas.offsetLeft;
   }
 }

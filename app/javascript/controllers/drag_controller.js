@@ -9,16 +9,24 @@ export default class extends Controller {
     clientPosition: Object,
     draggableOffset: Object,
     canvasOffset: Object,
-    callbacks: Array
+    subscribers: Array
   }
 
   connect() {
-    this.element[`${this.identifier}Controller`] = this
+    this.allDraggables.forEach(el => {
+      this._registerController(el)
+    })
 
     this.canvasOffsetValue = {
       x: this.element.getBoundingClientRect().left,
       y: this.element.getBoundingClientRect().top
     }
+
+    document.addEventListener(`${this.identifier}.state`, this.stateBroadcaster)
+  }
+
+  disconnect() {
+    document.removeEventListener(`${this.identifier}.state`, this.stateBroadcaster)
   }
 
   start(event) {
@@ -54,10 +62,6 @@ export default class extends Controller {
     // if (closestDroppable != this.droppableTarget) return
   }
 
-  register(cb) {
-    this.callbacksValue += cb
-  }
-
   revert(event) {
     if (!this.isDraggingValue || event.target != this.element) return;
 
@@ -70,11 +74,6 @@ export default class extends Controller {
   drop(event) {
     if (!this.isDraggingValue) return
 
-    // TODO: persist the dragged element's coordinates server-side
-    this.draggableTarget.moveCallbackController.elementMoved()
-
-    // this.callbacksValue.forEach(cb => cb())
-
     this.isDraggingValue = false
   }
 
@@ -86,8 +85,8 @@ export default class extends Controller {
 
       // Store original position in case of reverting
       this.draggableOriginalPositionValue = {
-          x: this.draggableTarget.style.x,
-          y: this.draggableTarget.style.y
+        x: this.draggableTarget.style.x,
+        y: this.draggableTarget.style.y
       }
 
       this.draggableTarget.classList.add(this.draggableClass)
@@ -135,7 +134,6 @@ export default class extends Controller {
     }
   }
 
-  // credit: https://javascript.info/object#check-for-emptiness
   _isEmpty(obj) {
     for (let _key in obj) {
       // if the loop has started, there is a property
@@ -148,6 +146,10 @@ export default class extends Controller {
     if (typeof bool != Boolean) return
 
     bool = !bool
+  }
+
+  _registerController(el) {
+    el[this.identifier] = this
   }
 
   // Temporarily (for a split second) hide the draggable in order to access the
@@ -177,5 +179,15 @@ export default class extends Controller {
       x: this.draggableOffsetValue.x + this.canvasOffsetValue.x,
       y: this.draggableOffsetValue.y + this.canvasOffsetValue.y
     }
+  }
+
+  get allDraggables() {
+    return this.element.querySelectorAll("[data-draggable]")
+  }
+
+  get stateBroadcaster() {
+    return function(_event, callback) {
+      callback(this)
+    }.bind(this)
   }
 }
