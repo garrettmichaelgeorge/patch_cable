@@ -1,6 +1,6 @@
-class PatchesChannel < ApplicationCable::Channel
+class BoxesChannel < ApplicationCable::Channel
   def subscribed
-    stream_or_reject_for Patch.find(params[:id])
+    stream_for "boxes"
   end
 
   def unsubscribed
