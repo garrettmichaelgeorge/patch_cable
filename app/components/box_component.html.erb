@@ -8,13 +8,16 @@
                        box_target: "box",
                        box: box.sgid } do %>
 
-  <%= tag.pc_inlets class: "pc-inlets" do %>
-    <% box.inlets.each do |inlet| %>
-
-        <%= tag.pc_inlet id: dom_id(inlet) do %>
+  <% cache box.inlets do %>
+    <%= tag.pc_inlets class: "pc-inlets" do %>
+      <% box.inlets.each do |inlet| %>
+        <%= tag.pc_inlet id: dom_id(inlet),
+                         class: "pc-inlet pc-control",
+                         data: { inlet: inlet.sgid,
+                                 lines_target: "destination" } do %>
           <%= icon :circle, class: "is-small mr-1 is-draggable" %>
         <% end %>
-
+      <% end %>
     <% end %>
   <% end %>
 
@@ -28,11 +31,16 @@
                  data: { reflex: "click->Box#destroy",
                          reflex_dataset: "combined" } %>
 
-  <%= tag.pc_outlets class: "pc-outlets" do %>
-    <% box.outlets.each do |outlet| %>
+  <% cache box.outlets do %>
+    <%= tag.pc_outlets class: "pc-outlets" do %>
 
-      <%= tag.pc_outlet id: dom_id(outlet) do %>
-        <%= icon :circle, class: "is-small is-draggable" %>
+      <% box.outlets.each do |outlet| %>
+        <%= tag.pc_outlet id: dom_id(outlet),
+                          class: "pc-outlet pc-control",
+                          data: { outlet: outlet.sgid,
+                                  lines_target: "source" } do %>
+          <%= icon :circle, class: "is-small is-draggable" %>
+        <% end %>
       <% end %>
 
     <% end %>

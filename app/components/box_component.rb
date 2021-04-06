@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BoxComponent < ApplicationComponent
-  # renders_one :wrapper, "BoxWrapperComponent"
-
   def initialize(box:)
     @box = box
   end
@@ -15,22 +13,29 @@ class BoxComponent < ApplicationComponent
     "interfaces/#{box.type}"
   end
 
-  class BoxWrapperComponent < ApplicationComponent
-    def initialize(box:)
-      @box = box
+  class EndpointComponent < ApplicationComponent
+    def initialize(endpoint:)
+      @endpoint = endpoint
     end
 
-    def call
-      tag.pc_box id: dom_id(box),
-                 class: "box pc-box",
-                 data: { draggable: true,
-                         box: box.to_sgid.to_s } do 
-        content
+    def call_endpoint
+      tag.pc_endpoint id: dom_id(endpoint) do
+        endpoint
+      end
+    end
+
+    def call_outlet
+      tag.pc_outlet id: dom_id(outlet) do
+        endpoint
       end
     end
 
     private
 
-    attr_reader :box
+    attr_reader :endpoint
+
+    def endpoint
+      icon :circle, class: "is-small is-draggable"
+    end
   end
 end

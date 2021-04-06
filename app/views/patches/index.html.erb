@@ -4,18 +4,22 @@
 
 <%= content_for :header_body do %>
   <%= component :neon_sign do %>
-    <%= t(".title") %>
+    <%= t ".title" %>
   <% end %>
 <% end %>
 
 <section class="section">
   <pc-container class="container has-text-centered">
-    <% @patches.each do |patch| %>
-    <ul>
-      <li>
-        <%= link_to patch.name, patch_path(patch.id) %>
-      </li>
-    </ul>
+    <% cache @patches do %>
+      <% @patches.each do |patch| %>
+      <ul>
+
+        <li>
+          <%= link_to patch.name, patch_path(patch.id) %>
+        </li>
+
+      </ul>
+      <% end %>
     <% end %>
   </pc-container>
 </section>

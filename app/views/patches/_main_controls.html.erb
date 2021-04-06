@@ -1,8 +1,24 @@
 <%= tag.fieldset class: "menu is-clipped is-w-min-content has-background-light" do %>
+  <template id="template-patch-main-menu">
+    <p>Hello, Patch Main Menu!</p>
+  </template>
+
   <ul class="menu-list">
 
     <li>
-      <button id="<%= dom_class(patch, :create) %>"
+      <button
+        id="popover-main-menu-trigger"
+        class="button"
+        data-controller="popover"
+        data-action="popover#show"
+        data-popover-template="template-patch-main-menu"
+      >
+        <%= icon_tag :hamburger, class: "is-small" %>
+      </button>
+    </li>
+
+    <li>
+      <button id="<%= dom_class(patch.boxes, :create) %>"
               class="button"
               data-controller="box"
               data-reflex="click->Box#create"
@@ -15,7 +31,7 @@
       <button id=""
               class="button">
         <span class="icon is-small">
-          <i class="fas fa-italic"></i>
+          <%= icon_tag :italic, class: "is-small" %>
         </span>
       </button>
     </li>
@@ -23,7 +39,7 @@
     <li>
       <button class="button">
         <span class="icon is-small">
-          <i class="fas fa-underline"></i>
+          <%= icon_tag :underline, class: "is-small" %>
         </span>
       </button>
     </li>

@@ -4,7 +4,7 @@
 
 <%= tag.pc_patch id: dom_class(@patch, :container),
                  class: "pc-patch drag--droppable is-flex",
-                 data: { controller: "drag audio-context",
+                 data: { controller: "drag audio-context lines",
                          reflex_root: dom_class(@patch, :container),
                          drag_target: "droppable",
                          drag_draggable_offset_value: { x: 0, y: 0 },
@@ -15,9 +15,13 @@
                          action: token_list("mousedown->drag#start",
                                             "mousemove->drag#drag",
                                             "mouseup->drag#drop",
+                                            "mousedown->lines#build",
+                                            "mousemove->lines#move",
+                                            "mouseup->lines#create",
                                             "click->audio-context#start:once") } do %>
 
-  <%= render "patches/main_controls", patch: @patch, cached: true %>
-
-  <%= render "patch", patch: @patch, cached: true %>
+  <% cache @patch do %>
+    <%= render "patches/main_controls", patch: @patch, cached: true %>
+    <%= render "patch", patch: @patch, cached: true %>
+  <% end %>
 <% end %>

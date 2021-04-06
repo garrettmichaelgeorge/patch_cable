@@ -1,27 +1,27 @@
 <%= tag.pc_patch_canvas id: dom_id(patch),
                         class: "pc-patch-canvas has-background-grey" do %>
-  <%= tag.pc_boxes id: "boxes",
-                   data: { controller: "box" } do %>
-    <p>
-      <%= patch.boxes.count %>
-    </p>
 
-    <%= component_with_collection "box", cache: patch.boxes, collection: patch.boxes %>
-
+  <% cache patch.boxes do %>
+    <%= tag.pc_boxes id: "boxes",
+                     data: { controller: "box" } do %>
+      <%= component_with_collection "box", cache: patch.boxes,
+                                           collection: patch.boxes %>
+    <% end %>
   <% end %>
 
-  <%= tag.pc_lines id: "lines_container",
-                   class: "pc-line-container" do %>
-    <svg
-      id="lines_svg"
-      width="100%"
-      height="100%"
-      class="pc-line-svg" 
-    >
-      <% patch.boxes.each do |box| %>
-        <%= component_with_collection :line, collection: box.destination_lines %>
-      <% end %>
-    </svg>
+  <% cache patch.lines do %>
+    <%= tag.pc_lines id: "lines_container",
+                     class: "pc-line-container" do %>
+      <svg
+        id="lines_svg"
+        width="100%"
+        height="100%"
+        class="pc-line-svg" 
+      >
+          <%= component_with_collection :line, cache: patch.lines,
+                                               collection: patch.lines %>
+      </svg>
+    <% end %>
   <% end %>
 
 <% end %>

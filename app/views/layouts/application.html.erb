@@ -17,13 +17,13 @@
     <%= javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body data-controller="radiolabel application"
+  <body data-controller="radiolabel application tippy"
         data-application-is-waiting-class="is-waiting">
 
     <%= tag.header class: header_class do %>
 
       <header class="hero-head">
-        <%= render "shared/navbar" %>
+        <%= render "shared/navbar", cached: true %>
       </header>
 
       <main class="hero-body">
