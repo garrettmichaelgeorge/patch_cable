@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>PatchCable</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,14 +14,13 @@
 
     <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'icons', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/bb25db85d8.js" crossorigin="anonymous"></script>
   </head>
 
   <body data-controller="radiolabel application tippy"
         data-application-is-waiting-class="is-waiting">
 
-    <%= tag.header class: header_class do %>
-
+    <header id="header" class="<%= header_class %>">
       <header class="hero-head">
         <%= render "shared/navbar", cached: true %>
       </header>
@@ -34,16 +33,16 @@
 
       <footer class="hero-foot">
       </footer>
-    <% end %>
+    </header>
 
-    <main class="">
+    <main id="main" class="">
       <pc-container class="container">
         <%= yield %>
       </pc-container>
     </main>
 
-      <footer id="footer" class="footer">
-        <%= render "shared/footer", cached: true %>
-      </footer>
+    <footer id="footer" class="footer">
+      <%= render "shared/footer", cached: true %>
+    </footer>
   </body>
 </html>
