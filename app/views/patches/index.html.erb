@@ -10,16 +10,18 @@
 
 <section class="section">
   <pc-container class="container has-text-centered">
+
     <% cache @patches do %>
-      <% @patches.each do |patch| %>
+
       <ul>
-
-        <li>
-          <%= link_to patch.name, patch_path(patch.id) %>
-        </li>
-
+        <% @patches.each do |patch| %>
+          <li>
+            <%= link_to patch.name, patch_path(patch.id) %>
+          </li>
+        <% end %>
       </ul>
-      <% end %>
+
     <% end %>
+
   </pc-container>
 </section>
