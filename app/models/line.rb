@@ -1,7 +1,7 @@
 class Line < ApplicationRecord
-  belongs_to :source,       inverse_of: :lines, counter_cache: true,
+  belongs_to :source,       inverse_of: :lines, counter_cache: true, touch: true,
                             class_name: "Outlet", foreign_key: "outlet_id"
-  belongs_to :destination,  inverse_of: :lines, counter_cache: true,
+  belongs_to :destination,  inverse_of: :lines, counter_cache: true, touch: true,
                             class_name: "Inlet", foreign_key: "inlet_id"
   has_one :source_box,      through: :source,      source: :box,
                             inverse_of: :destination_lines
