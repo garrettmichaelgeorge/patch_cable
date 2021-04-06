@@ -2,7 +2,6 @@
 
 .drag--is-dragging
   .drag--draggable 
-    z-index: map-get($zindex, draggable)
     cursor: grabbing
 
 .drag--is-dragging.drag-droppable 
@@ -14,6 +13,7 @@
   color: #666
   transition-property: color, box-shadow, text-shadow
   transition-duration: .3s
+  z-index: map-get($zindex, draggable)
 
   &:before 
     content: ''
