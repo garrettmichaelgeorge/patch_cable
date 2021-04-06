@@ -1,8 +1,11 @@
 require "test_helper"
 
-class PatchTest < ActiveSupport::TestCase
+describe Patch do
   context "association" do
     should have_many(:boxes).inverse_of(:patch)
+    # should have_many(:inlets).through(:boxes).inverse_of(:patch)
+    # should have_many(:outlets).through(:boxes).inverse_of(:patch)
+    should have_many(:lines).through(:boxes).inverse_of(:patch)
   end
 
   context "validations" do
