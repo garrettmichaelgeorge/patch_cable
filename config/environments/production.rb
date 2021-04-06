@@ -134,4 +134,6 @@ Rails.application.configure do
   # Guard against header attacks on production
   # Read more: https://edgeguides.rubyonrails.org/configuring.html#configuring-middleware
   config.hosts << "patchcable.herokuapp.com"
+
+  config.action_controller.default_url_options = { host: "patchcable.herokuapp.com" }
 end
