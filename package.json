@@ -1,6 +1,7 @@
 {
   "name": "patch_cable",
   "private": true,
+  "sideEffects": false,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -12,6 +13,7 @@
     "nexusui": "^2.1.6",
     "radiolabel": "^1.1.0",
     "stimulus": "^2.0.0",
+    "stimulus-controller-resolver": "^1.1.0",
     "stimulus_reflex": "3.4.1",
     "tippy.js": "^6.3.1",
     "tone": "^14.7.77",
