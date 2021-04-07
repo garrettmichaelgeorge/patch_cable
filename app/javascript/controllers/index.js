@@ -2,15 +2,21 @@
 // Controller files must be named *_controller.js.
 
 import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import StimulusControllerResolver from "stimulus-controller-resolver"
+// import { definitionsFromContext } from "stimulus/webpack-helpers"
 import StimulusReflex from "stimulus_reflex"
 import consumer from "../channels/consumer"
 import controller from "../controllers/application_controller"
-import Radiolabel from "radiolabel"
 
 const application = Application.start()
-const context = require.context("controllers", true, /_controller\.js$/)
-application.load(definitionsFromContext(context))
+
+StimulusControllerResolver.install(application, async controllerName => (
+  (await import(`./${controllerName}-controller.js`)).default
+))
+
+// const context = require.context("controllers", true, /_controller\.js$/)
+// application.load(definitionsFromContext(context))
+
 StimulusReflex.initialize(application, { consumer, controller, isolate: true })
 
 if (process.env.RAILS_ENV === "development") {
