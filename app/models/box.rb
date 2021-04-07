@@ -1,5 +1,5 @@
 class Box < ApplicationRecord
-  after_update :refresh_box
+  # after_update :refresh_box
   before_create :add_inlets_and_outlets
 
   serialize :settings
