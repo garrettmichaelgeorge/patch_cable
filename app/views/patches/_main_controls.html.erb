@@ -1,6 +1,14 @@
 <%= tag.fieldset class: "menu is-clipped is-w-min-content has-background-light" do %>
   <template id="template-patch-main-menu">
-    <p>Hello, Patch Main Menu!</p>
+    <nav class="panel is-info has-background-light">
+      <h3 class="panel-heading">
+        Main Menu
+      </h3>
+      <%= link_to "#", class: "panel-block" do %>
+        <%= icon_tag :unknown, class: "panel-icon" %>
+        Hello, world!
+      <% end %>
+    </nav>
   </template>
 
   <ul class="menu-list">
@@ -9,6 +17,7 @@
       <button
         id="popover-main-menu-trigger"
         class="button"
+        aria-describedby="popover-main-menu-trigger"
         data-controller="popover"
         data-action="popover#show"
         data-popover-template="template-patch-main-menu"

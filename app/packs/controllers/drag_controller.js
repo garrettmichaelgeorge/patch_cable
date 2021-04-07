@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import fastdom from "fastdom"
 
 export default class extends Controller {
   static targets = [ "draggable", "droppable" ]
@@ -17,16 +18,12 @@ export default class extends Controller {
       this._registerController(el)
     })
 
-    this.canvasOffsetValue = {
-      x: this.element.getBoundingClientRect().left,
-      y: this.element.getBoundingClientRect().top
-    }
-
-    document.addEventListener(`${this.identifier}.state`, this.stateBroadcaster)
-  }
-
-  disconnect() {
-    document.removeEventListener(`${this.identifier}.state`, this.stateBroadcaster)
+    fastdom.measure(() => {
+      this.canvasOffsetValue = {
+        x: this.element.offsetLeft,
+        y: this.element.offsetTop
+      }
+    })
   }
 
   start(event) {
@@ -34,13 +31,18 @@ export default class extends Controller {
 
     event.preventDefault()
 
-    event.target.setAttribute("data-drag-target", "draggable")
+    fastdom.mutate(() => {
+      event.target.setAttribute("data-drag-target", "draggable")
+    })
+
     this.isDraggingValue = true
 
-    this.draggableOffsetValue = {
-      x: event.clientX - this.draggableTarget.getBoundingClientRect().left,
-      y: event.clientY - this.draggableTarget.getBoundingClientRect().top
-    }
+    fastdom.measure(() => {
+      this.draggableOffsetValue = {
+        x: event.clientX - this.draggableTarget.offsetLeft,
+        y: event.clientY - this.draggableTarget.offsetTop
+      }
+    })
 
     // Update the client position state, which triggers the _move() action
     this.clientPositionValue = {
@@ -65,8 +67,10 @@ export default class extends Controller {
   revert(event) {
     if (!this.isDraggingValue || event.target != this.element) return;
 
-    this.draggableTarget.style.left = this.draggableOriginalPositionValue.x
-    this.draggableTarget.style.top = this.draggableOriginalPositionValue.y
+    fastdom.mutate(() => {
+      this.draggableTarget.style.left = this.draggableOriginalPositionValue.x
+      this.draggableTarget.style.top = this.draggableOriginalPositionValue.y
+    })
 
     this.drop(event)
   }
@@ -83,18 +87,24 @@ export default class extends Controller {
     if (isDragging) {
       this._preventDefaultOnDragStart(this.draggableTarget)
 
-      // Store original position in case of reverting
-      this.draggableOriginalPositionValue = {
-        x: this.draggableTarget.style.x,
-        y: this.draggableTarget.style.y
-      }
+      fastdom.measure(() => {
+        // Store original position in case of reverting
+        this.draggableOriginalPositionValue = {
+          x: this.draggableTarget.style.x,
+          y: this.draggableTarget.style.y
+        }
+      })
 
-      this.draggableTarget.classList.add(this.draggableClass)
-      this.element.classList.add(this.isDraggingClass)
+      fastdom.mutate(() => {
+        this.draggableTarget.classList.add(this.draggableClass)
+        this.element.classList.add(this.isDraggingClass)
+      })
     } else {
-      this.element.classList.remove(this.isDraggingClass)
-      this.draggableTarget.classList.remove(this.draggableClass)
-      this.draggableTarget.setAttribute("data-drag-target", "")
+      fastdom.mutate(() => {
+        this.element.classList.remove(this.isDraggingClass)
+        this.draggableTarget.classList.remove(this.draggableClass)
+        this.draggableTarget.setAttribute("data-drag-target", "")
+      })
     }
   }
 
@@ -109,29 +119,42 @@ export default class extends Controller {
     // which implements the canvasOffset logic natively
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetY
 
-    this.draggableTarget.setAttribute("data-x", this.canvasPosition.x)
-    this.draggableTarget.setAttribute("data-y", this.canvasPosition.y)
-
-    this.draggableTarget.style.left = `${this.canvasPosition.x}px`
-    this.draggableTarget.style.top = `${this.canvasPosition.y}px`
+    fastdom.mutate(() => {
+      this.draggableTarget.setAttribute("data-x", this.canvasPosition.x)
+      this.draggableTarget.setAttribute("data-y", this.canvasPosition.y)
+      this.draggableTarget.style.left = `${this.canvasPosition.x}px`
+      this.draggableTarget.style.top = `${this.canvasPosition.y}px`
+    })
   }
 
   _isDraggable(el) {
-    return el.getAttribute("data-draggable")
+    let result
+
+    fastdom.measure(() => {
+      result = el.getAttribute("data-draggable")
+    })
+    
+    return result
   }
 
   _hide(el) {
-    el.hidden = true
+    fastdom.mutate(() => {
+      el.hidden = true
+    })
   }
 
   _show(el) {
-    el.hidden = false
+    fastdom.mutate(() => {
+      el.hidden = true
+    })
   }
 
   _preventDefaultOnDragStart(el) {
-    el.ondragstart = () => {
-      return false
-    }
+    fastdom.mutate(() => {
+      el.ondragstart = () => {
+        return false
+      }
+    })
   }
 
   _isEmpty(obj) {
@@ -157,10 +180,14 @@ export default class extends Controller {
   get elementBelowDraggable() {
     this._hide(this.draggableTarget)
 
-    const result = document.elementFromPoint(
-      this.clientPositionValue.x,
-      this.clientPositionValue.y
-    )
+    let result
+
+    fastdom.measure(() => {
+      result = document.elementFromPoint(
+        this.clientPositionValue.x,
+        this.clientPositionValue.y
+      )
+    })
 
     this._show(this.draggableTarget)
 
@@ -183,11 +210,5 @@ export default class extends Controller {
 
   get allDraggables() {
     return this.element.querySelectorAll("[data-draggable]")
-  }
-
-  get stateBroadcaster() {
-    return function(_event, callback) {
-      callback(this)
-    }.bind(this)
   }
 }

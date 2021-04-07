@@ -6,8 +6,4 @@ export default class extends Controller {
 
   connect (event) {
   }
-
-  connect (event) {
-    
-  }
 }

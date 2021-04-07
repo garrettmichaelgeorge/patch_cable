@@ -28,19 +28,19 @@
   "test/factories.rb": {
     "task": "factory_bot:lint"
   },
-  "app/javascript/stylesheets/*": {
+  "app/packs/stylesheets/*": {
     "type": "stylesheet",
     "related": [
-      "app/javascript/stylesheets/application.scss"
+      "app/packs/stylesheets/application.scss"
     ]
   },
-  "app/javascript/packs/*.js": {
-    "type": "pack"
+  "app/packs/entrypoints/*": {
+    "type": "entrypoint"
   },
-  "app/javascript/controllers/*_controller.js": {
+  "app/packs/controllers/*_controller.js": {
     "type": "stimuluscontroller"
   },
-  "app/javascript/src/*.js": {
+  "app/packs/src/*.js": {
     "type": "src"
   }
 }

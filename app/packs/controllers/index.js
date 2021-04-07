@@ -1,4 +1,4 @@
-// Load all the controllers within this directory and all subdirectories. 
+// Load all the controllers within this directory and all subdirectories.
 // Controller files must be named *_controller.js.
 
 import { Application } from "stimulus"
@@ -11,7 +11,7 @@ import controller from "../controllers/application_controller"
 const application = Application.start()
 
 StimulusControllerResolver.install(application, async controllerName => (
-  (await import(`./${controllerName}-controller.js`)).default
+  (await import(`./${controllerName.replace(/-/g, "_")}_controller.js`)).default
 ))
 
 // const context = require.context("controllers", true, /_controller\.js$/)

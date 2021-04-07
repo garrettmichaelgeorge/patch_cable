@@ -10,9 +10,9 @@ gem "pg", "~> 1.1"
 # Use Puma as the app server
 gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
-gem "sass-rails", ">= 6"
+# gem "sass-rails", ">= 6"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.0"
+gem 'webpacker', '6.0.0.beta.6'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -37,7 +37,6 @@ gem "bootsnap", ">= 1.4.4", require: false
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
-  gem "minitest-spec-rails", "~> 6.0"
 end
 
 group :development do
@@ -46,6 +45,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "rack-mini-profiler", "~> 2.0"
+  gem "memory_profiler"
   gem "listen", "~> 3.3"
   gem "solargraph"
 end
@@ -53,6 +53,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 3.26"
+  gem "minitest"
+  gem "minitest-spec-rails", "~> 6.0"
+  gem "minitest-reporters"
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"

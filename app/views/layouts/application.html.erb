@@ -15,13 +15,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 
-    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://kit.fontawesome.com/bb25db85d8.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body data-controller="radiolabel application tippy"
         data-application-is-waiting-class="is-waiting">
+
+    <p><%= stylesheet_pack_tag "application" %></p>
 
     <header id="header" class="<%= header_class %>">
       <header class="hero-head">
@@ -47,5 +48,7 @@
     <footer id="footer" class="footer">
       <%= render "shared/footer", cached: true %>
     </footer>
+
+    <script src="https://kit.fontawesome.com/bb25db85d8.js" crossorigin="anonymous"></script>
   </body>
 </html>

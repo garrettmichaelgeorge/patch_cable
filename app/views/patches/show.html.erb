@@ -2,25 +2,25 @@
   is-hidden
 <% end %>
 
-<%= tag.pc_patch id: dom_class(@patch, :container),
-                 class: "pc-patch drag--droppable is-flex",
-                 data: { controller: "drag audio-context lines",
-                         reflex_root: dom_class(@patch, :container),
-                         drag_target: "droppable",
-                         drag_draggable_offset_value: { x: 0, y: 0 },
-                         drag_canvas_offset_value: { x: 0, y: 0 },
-                         drag_is_dragging_class: "drag--is-dragging",
-                         drag_droppable_class: "drag--droppable",
-                         drag_draggable_class: "drag--draggable",
-                         action: token_list("mousedown->drag#start",
-                                            "mousemove->drag#drag",
-                                            "mouseup->drag#drop",
-                                            "mousedown->lines#build",
-                                            "mousemove->lines#move",
-                                            "mouseup->lines#create",
-                                            "click->audio-context#start:once") } do %>
+<% cache @patch do %>
+  <%= tag.pc_patch id: dom_class(@patch, :container),
+                   class: "pc-patch drag--droppable is-flex",
+                   data: { controller: "drag audio-context lines",
+                           reflex_root: dom_class(@patch, :container),
+                           drag_target: "droppable",
+                           drag_draggable_offset_value: { x: 0, y: 0 },
+                           drag_canvas_offset_value: { x: 0, y: 0 },
+                           drag_is_dragging_class: "drag--is-dragging",
+                           drag_droppable_class: "drag--droppable",
+                           drag_draggable_class: "drag--draggable",
+                           action: token_list("mousedown->drag#start",
+                                              "mousemove->drag#drag",
+                                              "mouseup->drag#drop",
+                                              "mousedown->lines#build",
+                                              "mousemove->lines#move",
+                                              "mouseup->lines#create",
+                                              "click->audio-context#start:once") } do %>
 
-  <% cache @patch do %>
     <%= render "patches/main_controls", patch: @patch, cached: true %>
     <%= render "patch", patch: @patch, cached: true %>
   <% end %>

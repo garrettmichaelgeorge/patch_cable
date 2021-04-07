@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import fastdom from "fastdom"
 
 export default class extends Controller {
   static classes = [ "active" ]
@@ -34,10 +35,14 @@ export default class extends Controller {
   }
 
   _activate(el) {
-    el.classList.add(this.activeClass)
+    fastdom.mutate(() => {
+      el.classList.add(this.activeClass)
+    })
   }
 
   _deactivate(el) {
-    el.classList.remove(this.activeClass)
+    fastdom.mutate(() => {
+      el.classList.remove(this.activeClass)
+    })
   }
 }

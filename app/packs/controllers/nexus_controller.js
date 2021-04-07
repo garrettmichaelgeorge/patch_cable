@@ -1,6 +1,5 @@
 import ApplicationController from './application_controller'
 import Nexus from 'nexusui'
-import * as Tone from 'tone'
 
 /* This is the custom StimulusReflex controller for the Nexus Reflex.
  * Learn more at: https://docs.stimulusreflex.com
