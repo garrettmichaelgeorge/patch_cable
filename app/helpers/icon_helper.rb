@@ -11,10 +11,9 @@ module IconHelper
   end
   alias icon icon_tag
 
-  def icon_text_tag(name, type: solid, **opts)
+  def icon_text_tag(name, type: :solid, **opts)
     tag.icon_text class: "icon-text", **opts do
-      icon_tag(name, type)
-
+      icon_tag(name, type: type)
       yield
     end
   end
