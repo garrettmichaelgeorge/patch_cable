@@ -1,5 +1,6 @@
 import { Controller } from "stimulus"
 import fastdom from "fastdom"
+import { preventDragDefault } from "../src/util"
 
 export default class extends Controller {
   static classes = [ "moving" ]
@@ -16,7 +17,7 @@ export default class extends Controller {
 
   connect () {
     // Prevent default Browser Drag API behavior
-    this._preventDragDefault(this.element)
+    preventDragDefault(this.element)
 
     this.canvas = document.getElementById(this.canvasIdValue)
 
@@ -66,8 +67,6 @@ export default class extends Controller {
 
   // Stop moving and perform necessary cleanup
   stop () {
-    console.log("Stopping!")
-
     document.removeEventListener("mousemove", this.move)
 
     fastdom.mutate(() => {
@@ -90,11 +89,5 @@ export default class extends Controller {
     return coordinate
       - this.clientOffsetValue[coordinateType]
       - this.canvasOffsetValue[coordinateType]
-  }
-
-  _preventDragDefault (el) {
-    el.ondragstart = function () {
-      return false
-    }
   }
 }
