@@ -30,16 +30,16 @@ export default class extends Controller {
   }
 
   disconnect () {
-    console.log("Disconnected!", `${this.identifier}Controller`)
   }
 
   // Start the move, setting state and placing an event listener on document
   start (event) {
+    if (event.target != this.element) return
+
     event.preventDefault()
 
     fastdom.measure(() => {
       const rect = this.element.getBoundingClientRect()
-
       this.clientOffsetValue = {
         x: event.pageX - rect.left,
         y: event.pageY - rect.top
