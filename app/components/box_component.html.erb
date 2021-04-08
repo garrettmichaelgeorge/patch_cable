@@ -1,11 +1,14 @@
 <%= tag.pc_box id: dom_id(box),
                class: "box pc-box is-draggable",
                style: "left: #{box.x}px; top: #{box.y}px",
-               data: { draggable: true,
-                       controller: "box",
+               data: { controller: "box move",
                        x: box.x,
                        y: box.y,
                        box_target: "box",
+                       move_moving_class: "drag--is-dragging",
+                       move_canvas_id_value: dom_id(box.patch),
+                       action: token_list("mousedown->move#start",
+                                          "mouseup->move#stop"),
                        box: box.sgid } do %>
 
   <% cache box.inlets do %>

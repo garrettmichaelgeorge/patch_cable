@@ -48,8 +48,6 @@ export default class extends ApplicationController {
 
     this.sourceObserver = new MutationObserver(this.sourceMoved.bind(this))
     this.sourceObserver.observe(this.sourceBox, this.observerConfig)
-
-    console.log("Source ID changed!", this.element, this.sourceElement)
   }
 
   destinationIdValueChanged (id) {
@@ -57,8 +55,6 @@ export default class extends ApplicationController {
 
     this.destinationObserver = new MutationObserver(this.destinationMoved.bind(this))
     this.destinationObserver.observe(this.destinationBox, this.observerConfig)
-
-    console.log("Destination ID changed!", this.element, this.destinationElement)
   }
 
   get sourceBox () {
