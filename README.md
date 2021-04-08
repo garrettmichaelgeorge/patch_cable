@@ -1,6 +1,7 @@
 # PatchCable
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/1647826bfb3520e55aec/maintainability)](https://codeclimate.com/github/garrettmichaelgeorge/patch_cable/maintainability)
+[![Lighthouse Performance Badge](./lighthouse_results/lighthouse_performance.svg)](https://github.com/emazzotta/lighthouse-badges)
 
 PatchCable is a proof-of-concept implementation of the Patcher family of visual
 audio programming, using the Web Audio API and backed by Ruby on Rails with
