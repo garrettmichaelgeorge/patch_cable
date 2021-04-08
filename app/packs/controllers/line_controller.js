@@ -12,7 +12,9 @@ export default class extends ApplicationController {
     this.sourceMoved = this.sourceMoved.bind(this)
     this.destinationMoved = this.destinationMoved.bind(this)
 
-    // Create mutation observers once only
+    // Observe the line endpoints so that when they move, the line will
+    // re-render
+    // Ensure that mutation observers are created only once
     this.sourceObserver = new MutationObserver(this.sourceMoved)
     this.destinationObserver = new MutationObserver(this.destinationMoved)
   }
