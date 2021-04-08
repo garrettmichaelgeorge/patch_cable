@@ -36,3 +36,4 @@ yarn-debug.log*
 .yarn-integrity
 
 /config/credentials/test.key
+config/webpack_old
