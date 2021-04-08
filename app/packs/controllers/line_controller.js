@@ -1,9 +1,20 @@
 import ApplicationController from "./application_controller"
+import fastdom from "fastdom"
 
 export default class extends ApplicationController {
   static values = {
     sourceId: String,
     destinationId: String
+  }
+
+  initialize () {
+    // Bind context to event handlers so "this" always refers to the controller
+    this.sourceMoved = this.sourceMoved.bind(this)
+    this.destinationMoved = this.destinationMoved.bind(this)
+
+    // Create mutation observers once only
+    this.sourceObserver = new MutationObserver(this.sourceMoved)
+    this.destinationObserver = new MutationObserver(this.destinationMoved)
   }
 
   connect () {
@@ -34,41 +45,56 @@ export default class extends ApplicationController {
   }
 
   drawSource () {
-    this.element.setAttribute("x1", this.sourcePosition.x)
-    this.element.setAttribute("y1", this.sourcePosition.y)
+    fastdom.mutate(() => {
+      this.element.setAttribute("x1", this.sourcePosition.x)
+      this.element.setAttribute("y1", this.sourcePosition.y)
+    })
   }
 
   drawDestination () {
-    this.element.setAttribute("x2", this.destinationPosition.x)
-    this.element.setAttribute("y2", this.destinationPosition.y)
+    fastdom.mutate(() => {
+      this.element.setAttribute("x2", this.destinationPosition.x)
+      this.element.setAttribute("y2", this.destinationPosition.y)
+    })
   }
 
   sourceIdValueChanged (id) {
+    this.sourceObserver.disconnect()
+
     this.sourceElement = document.getElementById(id)
 
-    this.sourceObserver = new MutationObserver(this.sourceMoved.bind(this))
     this.sourceObserver.observe(this.sourceBox, this.observerConfig)
   }
 
   destinationIdValueChanged (id) {
+    this.destinationObserver.disconnect()
+
     this.destinationElement = document.getElementById(id)
 
-    this.destinationObserver = new MutationObserver(this.destinationMoved.bind(this))
     this.destinationObserver.observe(this.destinationBox, this.observerConfig)
+  }
+
+  _positionFromRect (rect) {
+    return {
+      x: rect.left + (rect.width / 2) - this.patchCanvas.offsetLeft,
+      y: rect.top + (rect.height / 2) - this.patchCanvas.offsetTop
+    }
   }
 
   get sourceBox () {
     // HACK: LineController should not know this much about the internals of the
     // source element
-    return this.sourceElement.parentElement
-                             .parentElement
+    return this.sourceElement
+      .parentElement
+      .parentElement
   }
 
   get destinationBox () {
     // HACK: LineController should not know this much about the internals of the
     // destination element
-    return this.destinationElement.parentElement
-                                  .parentElement
+    return this.destinationElement
+      .parentElement
+      .parentElement
   }
 
   get observerConfig () {
@@ -82,24 +108,14 @@ export default class extends ApplicationController {
   }
 
   get sourcePosition () {
-    return {
-      x: this.sourceElement.getBoundingClientRect().left + (this.sourceElement.getBoundingClientRect().width / 2) - this.patchCanvasLeft,
-      y: this.sourceElement.getBoundingClientRect().top + (this.sourceElement.getBoundingClientRect().height / 2) - this.patchCanvasTop
-    }
+    return this._positionFromRect(
+      this.sourceElement.getBoundingClientRect()
+    )
   }
 
   get destinationPosition () {
-    return {
-      x: this.destinationElement.getBoundingClientRect().left + (this.destinationElement.getBoundingClientRect().width / 2) - this.patchCanvasLeft,
-      y: this.destinationElement.getBoundingClientRect().top + (this.destinationElement.getBoundingClientRect().height / 2) - this.patchCanvasTop
-    }
-  }
-
-  get patchCanvasTop () {
-    return this.patchCanvas.offsetTop;
-  }
-
-  get patchCanvasLeft () {
-    return this.patchCanvas.offsetLeft;
+    return this._positionFromRect(
+      this.destinationElement.getBoundingClientRect()
+    )
   }
 }
