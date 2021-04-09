@@ -2,22 +2,22 @@
 
 .pc-patch-canvas 
   position: relative
+  z-index: map-get($zindex, canvas)
   min-height: 100vh
   width: 100%
-  z-index: map-get($zindex, canvas)
 
 .pc-box 
-  height: auto
-  width: intrinsic
   position: absolute
   display: flex
   z-index: map-get($zindex, box)
+  height: auto
+  width: intrinsic
 
 .pc-line-container
   user-select: none
-  width: 100%
-  height: 100%
   z-index: map-get($zindex, lineContainer)
+  height: 100%
+  width: 100%
 
 .pc-line 
   stroke-width: 4px
@@ -34,3 +34,7 @@
 .pc-outlets 
   top: 2rem
   left: -40%
+
+.pc-inlet, .pc-outlet
+  display: inline-block
+  border-radius: 100%

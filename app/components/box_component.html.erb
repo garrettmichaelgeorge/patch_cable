@@ -14,7 +14,7 @@
   <%= tag.ul class: "pc-inlets" do %>
     <% box.inlets.each do |inlet| %>
       <%= tag.li id: dom_id(inlet),
-                 class: "pc-inlet pc-control is-draggable is-inline-block has-z-index-control",
+                 class: "pc-inlet pc-control is-draggable has-z-index-control",
                  data: { inlet: inlet.sgid,
                          action: token_list("mousedown->endpoints#startLink",
                                             "mouseup->endpoints#link"),
@@ -38,7 +38,7 @@
   <%= tag.ul class: "pc-outlets" do %>
     <% box.outlets.each do |outlet| %>
       <%= tag.li id: dom_id(outlet),
-                 class: "pc-outlet pc-control is-draggable is-inline-block has-z-index-control",
+                 class: "pc-outlet pc-control is-draggable has-z-index-control",
                  data: { action: token_list("mousedown->endpoints#startLink",
                                             "mouseup->endpoints#link"),
                          outlet: outlet.sgid,

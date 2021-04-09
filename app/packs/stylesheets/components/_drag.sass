@@ -1,7 +1,6 @@
 @import "zindex"
 
-.drag--is-dragging
-  .is-draggable
+.drag--is-dragging.is-draggable
     cursor: grabbing
 
 .drag--is-dragging.drag-droppable 
@@ -9,32 +8,41 @@
 
 .is-draggable 
   cursor: grab
-  // background: #171515
-  color: #666
-  transition-property: color, box-shadow, text-shadow
+  position: relative
+  transition-property: box-shadow, text-shadow
   transition-duration: .3s
   z-index: map-get($zindex, draggable)
 
-  &:before 
-    content: ''
-    position: absolute
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    border-radius: 50%
-    // background: $orange
-    transition: box-shadow 3s
-    transform: scale(.9)
-    z-index: map-get($zindex, shadow)
+  // &:before 
+  //   content: ''
+  //   position: absolute
+  //   top: 0
+  //   left: 0
+  //   width: 100%
+  //   height: 100%
+  //   border-radius: 50%
+  //   background: $orange
+  //   box-shadow: 0 0 0 $orange
+  //   transition: box-shadow .3s
+  //   transform: scale(.9)
+  //   z-index: map-get($zindex, shadow)
 
   &:hover 
     color: #ffa502
     box-shadow: 0 0 15px $orange
     text-shadow: 0 0 15px $orange
 
-    &:before 
-      transform: scale(1.2)
-      box-shadow: 0 0 15px $orange
-      filter: blur(3px)
-      z-index: map-get($zindex, shadow)
+    // &:before 
+    //   transform: scale(1.2)
+    //   animation: scale .3s
+    //   animation-direction: alternate
+    //   animation-fill-mode: both
+    //   box-shadow: 0 0 15px $orange
+    //   filter: blur(3px)
+    //   z-index: map-get($zindex, shadow)
+
+@keyframes scale
+  0% 
+    transform: scale(0.9)
+  100%
+    transform: scale(1.2)
