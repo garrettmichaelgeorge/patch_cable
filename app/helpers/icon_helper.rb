@@ -6,10 +6,16 @@ module IconHelper
 
   def icon_tag(name, type: :solid, size: "", **opts)
     icon_wrapper_tag(**opts) do
-      tag.icon class: icon_class_for(name, type, size)
+      icon_raw_tag(name, type: type, size: size)
     end
   end
   alias icon icon_tag
+
+  def icon_raw_tag(name, type: :solid, size: "", **opts)
+    css_class = opts.delete(:class) if opts.has_key?(:class)
+
+    tag.icon class: icon_class_for(name, type, size, css_class)
+  end
 
   def icon_text_tag(name, type: :solid, **opts)
     tag.icon_text class: "icon-text", **opts do
@@ -29,10 +35,11 @@ module IconHelper
   end
   alias icon_wrapper icon_wrapper_tag
 
-  def icon_class_for(name, type, size)
+  def icon_class_for(name, type, size, *custom_classes)
     token_list(icon_base_class_for(type),
                icon_modifier_class_for(name),
-               icon_size_class_for(size))
+               icon_size_class_for(size),
+               *custom_classes)
   end
 
   private

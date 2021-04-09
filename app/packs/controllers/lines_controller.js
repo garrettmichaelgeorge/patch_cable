@@ -41,8 +41,6 @@ export default class extends ApplicationController {
   move (event) {
     if (!this.isLinkingValue) return
 
-    console.log("Moving!")
-
     this.clientPositionValue = {
       x: event.clientX,
       y: event.clientY
@@ -54,8 +52,6 @@ export default class extends ApplicationController {
 
   create () {
     if (!this.isLinkingValue) return
-
-    console.log("Linking!")
 
     // this.destinationIdValue = this.elementBelowDraggable
     this.stimulate("Line#create", this.sourceValue, this.destinationValue)

@@ -46,6 +46,10 @@ export default class extends ApplicationController {
     })
   }
 
+  destroy (event) {
+    this.stimulate("Line#destroy")
+  }
+
   drawSource () {
     fastdom.mutate(() => {
       this.element.setAttribute("x1", this.sourcePosition.x)

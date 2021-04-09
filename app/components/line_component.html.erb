@@ -1,10 +1,15 @@
-<%= tag.line id: dom_id(line),
-             class: "pc-line",
-             x1: line.source.box.x,
-             y1: line.source.box.y,
-             x2: line.destination.box.x,
-             y2: line.destination.box.y,
-             data: { controller: "line",
-                     line_target: "line",
-                     line_source_id_value: dom_id(line.source),
-                     line_destination_id_value: dom_id(line.destination) } %>
+<div>
+        <%= tag.line id: dom_id(line),
+        class: "pc-line is-draggable",
+        tabindex: 0,
+        x1: line.source_box.x,
+        y1: line.source_box.y,
+        x2: line.destination_box.x,
+        y2: line.destination_box.y,
+        data: { controller: "line popover",
+                line_target: "line",
+                line_source_id_value: dom_id(line.source),
+                line_destination_id_value: dom_id(line.destination),
+                popover_template: "line_menu",
+                action: token_list("contextmenu->popover#show") } %>
+</div>

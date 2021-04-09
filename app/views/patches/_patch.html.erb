@@ -1,5 +1,7 @@
-<%= tag.pc_patch_canvas id: dom_id(patch),
-                        class: "pc-patch-canvas has-background-grey" do %>
+<%= tag.article id: dom_id(patch),
+                class: "pc-patch-canvas has-background-grey",
+                data: { controller: "endpoints",
+                        action: token_list("mousemove->endpoints#move") } do %>
 
   <% cache patch.boxes do %>
     <%= tag.pc_boxes id: "boxes",
@@ -13,13 +15,13 @@
     <%= tag.pc_lines id: "lines_container",
                      class: "pc-line-container" do %>
       <svg
-        id="lines_svg"
+        id="lines"
         width="100%"
         height="100%"
         class="pc-line-svg" 
       >
-          <%= component_with_collection :line, cache: patch.lines,
-                                               collection: patch.lines %>
+        <%= component_with_collection :line, cache: patch.lines,
+                                             collection: patch.lines %>
       </svg>
     <% end %>
   <% end %>

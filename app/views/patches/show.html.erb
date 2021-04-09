@@ -16,12 +16,13 @@
                            action: token_list("mousedown->move#start",
                                               "mousemove->move#move",
                                               "mouseup->move#drop",
-                                              "mousedown->lines#build",
-                                              "mousemove->lines#move",
-                                              "mouseup->lines#create",
                                               "click->audio-context#start:once") } do %>
 
     <%= render "patches/main_controls", patch: @patch, cached: true %>
     <%= render "patch", patch: @patch, cached: true %>
   <% end %>
 <% end %>
+
+<section id="templates">
+  <%= render "shared/menus/line_menu" %>
+</section>

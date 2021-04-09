@@ -1,16 +1,21 @@
 import ApplicationController from "./application_controller"
 import debounce from "lodash/debounce"
+import fastdom from "fastdom"
 
 export default class extends ApplicationController {
   static targets = [ "box" ]
+
+  initialize () {
+    this.targetMoved = this.targetMoved.bind(this)
+  }
 
   connect () {
     super.connect()
 
     this.element[`${this.identifier}Controller`] = this
 
-    this.targetMoved = debounce(this.targetMoved, 1000)
-    this.observer = new MutationObserver(this.targetMoved.bind(this))
+    this.targetMoved = debounce(this.targetMoved, 4000)
+    this.observer = new MutationObserver(this.targetMoved)
     this.observer.observe(this.element, this.observerConfig)
   }
 
@@ -22,7 +27,7 @@ export default class extends ApplicationController {
     this.stimulate("Box#move")
   }
 
-  targetMoved (mutationRecords) {
+  targetMoved (_mutationRecords) {
     this.move()
   }
 
@@ -31,11 +36,15 @@ export default class extends ApplicationController {
   }
 
   beforeCreate(element) {
-    element.classList.add("is-loading", "is-primary")
+    fastdom.mutate(() => {
+      element.classList.add("is-loading", "is-primary")
+    })
   }
 
   afterCreate(element) {
-    element.classList.remove("is-loading", "is-primary")
+    fastdom.mutate(() => {
+      element.classList.remove("is-loading", "is-primary")
+    })
   }
 
   get observerConfig () {

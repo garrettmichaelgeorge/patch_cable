@@ -20,6 +20,8 @@ export default class extends Controller {
   }
 
   show (event) {
+    event.preventDefault()
+
     if (this.isShowingValue) {
       this.hide(event)
     } else {
@@ -79,5 +81,9 @@ export default class extends Controller {
 
   get templateId () {
     return this.element.getAttribute("data-popover-template")
+  }
+
+  get appendParent () {
+    return document.getElementById("lines")
   }
 }

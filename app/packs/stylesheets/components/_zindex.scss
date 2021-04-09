@@ -7,3 +7,19 @@ $zindex: (
   draggable     : 8100,
   control       : 9000
 );
+
+.has-z-index-canvas {
+  z-index: map-get($zindex, canvas)
+}
+
+.has-z-index-shadow {
+  z-index: map-get($zindex, shadow)
+}
+
+.has-z-index-below-canvas {
+  z-index: map-get($zindex, lineContainer) 
+}
+
+.has-z-index-control {
+  z-index: map-get($zindex, control)
+}

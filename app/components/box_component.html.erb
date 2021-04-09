@@ -11,15 +11,16 @@
                                           "mouseup->move#stop"),
                        box: box.sgid } do %>
 
-  <% cache box.inlets do %>
-    <%= tag.pc_inlets class: "pc-inlets" do %>
-      <% box.inlets.each do |inlet| %>
-        <%= tag.pc_inlet id: dom_id(inlet),
-                         class: "pc-inlet pc-control",
-                         data: { inlet: inlet.sgid,
-                                 lines_target: "destination" } do %>
-          <%= icon :circle, class: "is-small mr-1 is-draggable" %>
-        <% end %>
+  <%= tag.ul class: "pc-inlets" do %>
+    <% box.inlets.each do |inlet| %>
+      <%= tag.li id: dom_id(inlet),
+                 class: "pc-inlet pc-control is-draggable is-inline-block has-z-index-control",
+                 data: { inlet: inlet.sgid,
+                         action: token_list("mousedown->endpoints#startLink",
+                                            "mouseup->endpoints#link"),
+                         endpoints_target: "destination",
+                         lines_target: "destination" } do %>
+        <%= icon_raw_tag :circle, css_class: "is-small" %>
       <% end %>
     <% end %>
   <% end %>
@@ -34,18 +35,17 @@
                  data: { reflex: "click->Box#destroy",
                          reflex_dataset: "combined" } %>
 
-  <% cache box.outlets do %>
-    <%= tag.pc_outlets class: "pc-outlets" do %>
-
-      <% box.outlets.each do |outlet| %>
-        <%= tag.pc_outlet id: dom_id(outlet),
-                          class: "pc-outlet pc-control",
-                          data: { outlet: outlet.sgid,
-                                  lines_target: "source" } do %>
-          <%= icon :circle, class: "is-small is-draggable" %>
-        <% end %>
+  <%= tag.ul class: "pc-outlets" do %>
+    <% box.outlets.each do |outlet| %>
+      <%= tag.li id: dom_id(outlet),
+                 class: "pc-outlet pc-control is-draggable is-inline-block has-z-index-control",
+                 data: { action: token_list("mousedown->endpoints#startLink",
+                                            "mouseup->endpoints#link"),
+                         outlet: outlet.sgid,
+                         endpoints_target: "source",
+                         lines_target: "source" } do %>
+        <%= icon_raw_tag :circle, css_class: "is-small" %>
       <% end %>
-
     <% end %>
   <% end %>
 <% end %>
