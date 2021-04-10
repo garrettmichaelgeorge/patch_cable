@@ -1,6 +1,6 @@
 <%= tag.pc_box id: dom_id(box),
                class: "box pc-box is-draggable",
-               style: "left: #{box.x}px; top: #{box.y}px",
+               style: "transform: translate(#{box.x}px, #{box.y}px)",
                data: { controller: "box move",
                        x: box.x,
                        y: box.y,
@@ -28,10 +28,12 @@
   <%= component interface_component_name, box: box %>
 
   <p>
-    <%= box.id %>
+    <small>
+      <%= box.id %>
+    </small>
   </p>
 
-  <%= tag.button class: "delete is-small is-danger is-pulled-right",
+  <%= tag.button class: "delete is-small is-danger mt-1 mr-1",
                  data: { reflex: "click->Box#destroy",
                          reflex_dataset: "combined" } %>
 
