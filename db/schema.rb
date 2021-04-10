@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_235554) do
+ActiveRecord::Schema.define(version: 2021_04_09_215232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,11 +35,12 @@ ActiveRecord::Schema.define(version: 2021_04_01_235554) do
     t.index ["box_id"], name: "index_inlets_on_box_id"
   end
 
-  create_table "lines", id: false, force: :cascade do |t|
+  create_table "lines", force: :cascade do |t|
     t.bigint "inlet_id", null: false
     t.bigint "outlet_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["inlet_id", "outlet_id"], name: "index_lines_on_inlet_id_and_outlet_id", unique: true
     t.index ["inlet_id"], name: "index_lines_on_inlet_id"
     t.index ["outlet_id"], name: "index_lines_on_outlet_id"
   end

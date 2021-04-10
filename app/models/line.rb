@@ -11,12 +11,4 @@ class Line < ApplicationRecord
 
   alias_attribute :source_id, :outlet_id
   alias_attribute :destination_id, :inlet_id
-
-  def to_key
-    ["#{source_id}", "#{destination_id}"]
-  end
-
-  def join_id
-    to_key.join("_")
-  end
 end

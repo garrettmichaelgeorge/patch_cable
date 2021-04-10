@@ -14,14 +14,4 @@ describe Line do
                                      .inverse_of(:source_lines)
     should have_one(:patch).through(:source_box).inverse_of(:lines)
   end
-
-  context "dom_id interface" do
-    it "implements #model_name with #param_key" do
-      _(subject.model_name.param_key).must_equal subject.class.to_s.downcase.underscore
-    end
-
-    it "implements #to_key" do
-      _(subject.to_key).wont_be_nil
-    end
-  end
 end
