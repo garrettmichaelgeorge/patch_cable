@@ -1,0 +1,15 @@
+<template id="template-patch-main-menu">
+
+  <%= component :panel do |c| %>
+    <%= c.heading do %>
+      Main Menu
+    <% end %>
+    <%= c.block(url: patches_path, icon: :airplane) do %>
+      Back to Patches Overview
+    <% end %>
+    <%= c.block(url: "#") do %>
+      Patch settings
+    <% end %>
+  <% end %>
+
+</template>

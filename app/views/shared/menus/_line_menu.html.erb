@@ -1,12 +1,7 @@
 <template id="line_menu">
-  <section>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-    <p>Hello, Line Menu!</p>
-  </section>
+  <%= component :panel do |c| %>
+    <%= c.block do %>
+      Hello, line menu!
+    <% end %>
+  <% end %>
 </template>
