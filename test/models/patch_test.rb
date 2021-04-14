@@ -3,9 +3,10 @@ require "test_helper"
 describe Patch do
   context "association" do
     should have_many(:boxes).inverse_of(:patch)
+    should have_many(:lines).through(:boxes).inverse_of(:patch)
+    should have_one(:dac_box).inverse_of(:patch).conditions(dac: true)
     # should have_many(:inlets).through(:boxes).inverse_of(:patch)
     # should have_many(:outlets).through(:boxes).inverse_of(:patch)
-    should have_many(:lines).through(:boxes).inverse_of(:patch)
   end
 
   context "validations" do

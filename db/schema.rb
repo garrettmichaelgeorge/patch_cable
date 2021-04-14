@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_215232) do
+ActiveRecord::Schema.define(version: 2021_04_10_200053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audio_nodes", force: :cascade do |t|
+    t.string "name", limit: 40, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_audio_nodes_on_name", unique: true
+  end
 
   create_table "boxes", force: :cascade do |t|
     t.jsonb "settings"
@@ -24,6 +31,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_215232) do
     t.integer "outlets_count"
     t.integer "x", default: 0, null: false
     t.integer "y", default: 0, null: false
+    t.bigint "audio_node_id", null: false
+    t.index ["audio_node_id"], name: "index_boxes_on_audio_node_id"
     t.index ["patch_id"], name: "index_boxes_on_patch_id"
   end
 
@@ -61,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_215232) do
     t.integer "boxes_count"
   end
 
+  add_foreign_key "boxes", "audio_nodes"
   add_foreign_key "boxes", "patches"
   add_foreign_key "inlets", "boxes"
   add_foreign_key "outlets", "boxes"
