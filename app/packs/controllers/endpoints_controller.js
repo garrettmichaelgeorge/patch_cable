@@ -16,23 +16,15 @@ export default class extends ApplicationController {
     super.connect()
     this.sourceElement = undefined
     this.destinationElement = undefined
-
-    console.log(this.sourceTargets, this.destinationTargets)
   }
 
   startLink (event) {
-    console.log("Starting!")
+    console.log("Starting!", event.target)
 
     preventDragDefault(event.target)
     event.preventDefault()
 
-    if (this.sourceTargets.includes(event.target)) {
-      this.sourceElement = event.target
-    } else if (this.destinationTargets.includes(event.target)) {
-      this.destinationElement = event.target
-    }
-
-    console.log(this.sourceElement, this.destinationElement)
+    this._assignEndpoint(event.target)
 
     this.linkingValue = true
   }
@@ -40,32 +32,21 @@ export default class extends ApplicationController {
   move (event) {
     if (!this.linkingValue) return
 
-    // Give the user feedback by drawing a preview SVG line that follows the
+    // TODO: Give the user feedback by drawing a preview SVG line that follows the
     // cursor
   }
 
   link (event) {
     const elementBelow = event.target
 
-    if (!(this.linkingValue && this._isEndpoint(elementBelow))) {
+    if (!this.linkingValue) {
       this.reset()
       return
     }
 
-    if (this.sourceTargets.includes(elementBelow)) {
-      this.sourceElement = elementBelow
-    } else if (this.destinationTargets.includes(elementBelow)) {
-      this.destinationElement = elementBelow
-    }
+    this._assignEndpoint(elementBelow)
 
-    let signedSourceId, signedDestinationId
-
-    fastdom.measure(() => {
-      signedSourceId = this.sourceElement.getAttribute("data-outlet")
-      signedDestinationId = this.destinationElement.getAttribute("data-inlet")
-    })
-
-    this.stimulate("Line#create", signedSourceId, signedDestinationId)
+    this.stimulate("Line#create", this.signedSourceId, this.signedDestinationId)
 
     this.reset()
   }
@@ -79,16 +60,49 @@ export default class extends ApplicationController {
     this.destinationElement = undefined
   }
 
+  get signedSourceId () {
+    return this.sourceElement.dataset.endpoint
+  }
+
+  get signedDestinationId () {
+    return this.destinationElement.dataset.endpoint
+  }
+
   _isEndpoint (element) {
-    return [...this.sourceTargets, ...this.destinationTargets]
-      .includes(element)
+    return this._isSource(element) || this._isDestination(element)
+  }
+
+  _isSource (element) {
+    return this.sourceTargets.includes(element)
+  }
+
+  _isDestination (element) {
+    return this.destinationTargets.includes(element)
+  }
+
+  _assignEndpoint (element) {
+    // Because the event trigger is sometimes a child of the actual endpoint
+    // target, check the parent nodes also
+    try {
+      this._validateEndpoint(element)
+    } catch {
+      this._validateEndpoint(element.parentElement)
+    }
+
+    console.log("sourceElement", this.sourceElement, "destinationElement", this.destinationElement)
+  }
+
+  _validateEndpoint (element) {
+    if (this._isSource(element)) {
+      this.sourceElement = element
+    } else if (this._isDestination(element)) {
+      this.destinationElement = element
+    } else {
+      throw Error, "Invalid source/destination element!"
+    }
   }
 
   /* Reflex specific lifecycle methods.
-   * Example:
-   *
-   *   <a href="#" data-reflex="click->Outlet#dance" data-controller="outlet">Dance!</a>
-   *
    * Arguments:
    *
    *   element - the element that triggered the reflex

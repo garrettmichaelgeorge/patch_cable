@@ -4,7 +4,13 @@ import "velocity-animate/velocity.ui"
 
 export default class extends Controller {
   static values = {
-    isShowing: Boolean
+    showing: Boolean
+  }
+
+  initialize () {
+    this.onClickOutside = this.onClickOutside.bind(this)
+    this.onMount = this.onMount.bind(this)
+    this.onUntrigger = this.onUntrigger.bind(this)
   }
 
   connect () {
@@ -22,25 +28,25 @@ export default class extends Controller {
   show (event) {
     event.preventDefault()
 
-    if (this.isShowingValue) {
+    if (this.showingValue) {
       this.hide(event)
     } else {
       fastdom.mutate(() => {
         this.tippy.show()
       })
 
-      this.isShowingValue = true
+      this.showingValue = true
     }
   }
 
   hide (event) {
-    if (!this.isShowingValue) return
+    if (!this.showingValue) return
 
     fastdom.mutate(() => {
       this.tippy.hideWithInteractivity(event)
     })
 
-    this.isShowingValue = false
+    this.showingValue = false
   }
 
   onMount (instance) {
@@ -53,7 +59,7 @@ export default class extends Controller {
     const box = instance.popper.firstElementChild
     box.velocity("fadeOutDown")
 
-    this.isShowingValue = false
+    this.showingValue = false
   }
 
   onClickOutside (instance, event) {
@@ -72,10 +78,11 @@ export default class extends Controller {
       allowHTML: true,
       interactive: true,
       animation: false,
-      placement: "right-end",
-      onClickOutside: this.onClickOutside.bind(this),
-      onMount: this.onMount.bind(this),
-      onUntrigger: this.onUntrigger.bind(this)
+      // placement: "right-end",
+      appendTo: document.body,
+      onClickOutside: this.onClickOutside,
+      onMount: this.onMount,
+      onUntrigger: this.onUntrigger
     }
   }
 

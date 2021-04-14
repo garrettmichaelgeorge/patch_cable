@@ -3,26 +3,27 @@
 <% end %>
 
 <% cache @patch do %>
-  <%= tag.pc_patch id: dom_class(@patch, :container),
-                   class: "pc-patch drag--droppable is-flex",
-                   data: { controller: "audio-context lines",
-                           reflex_root: dom_class(@patch, :container),
-                           move_target: "droppable",
-                           move_movable_offset_value: { x: 0, y: 0 },
-                           move_canvas_offset_value: { x: 0, y: 0 },
-                           move_is_moving_class: "drag--is-dragging",
-                           move_droppable_class: "drag--droppable",
-                           move_movable_class: "drag--draggable",
-                           action: token_list("mousedown->move#start",
-                                              "mousemove->move#move",
-                                              "mouseup->move#drop",
-                                              "click->audio-context#start:once") } do %>
+  <%= tag.section id: dom_class(@patch, :container),
+                  class: "pc-patch drag--droppable is-flex",
+                  data: { controller: "audio-context lines",
+                          reflex_root: dom_class(@patch, :container),
+                          move_target: "droppable",
+                          move_movable_offset_value: { x: 0, y: 0 },
+                          move_canvas_offset_value: { x: 0, y: 0 },
+                          move_is_moving_class: "drag--is-dragging",
+                          move_droppable_class: "drag--droppable",
+                          move_movable_class: "drag--draggable",
+                          action: token_list("mousedown->move#start",
+                                             "mousemove->move#move",
+                                             "mouseup->move#drop",
+                                             "click->audio-context#start:once") } do %>
 
     <%= render "patches/main_controls", patch: @patch, cached: true %>
-    <%= render "patch", patch: @patch, cached: true %>
+    <%= render @patch, cached: true %>
   <% end %>
 <% end %>
 
 <section id="templates">
   <%= render "shared/menus/line_menu" %>
+  <%= render "shared/menus/patch_main_menu" %>
 </section>

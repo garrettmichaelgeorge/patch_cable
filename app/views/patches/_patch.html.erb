@@ -4,16 +4,16 @@
                         action: token_list("mousemove->endpoints#move") } do %>
 
   <% cache patch.boxes do %>
-    <%= tag.pc_boxes id: "boxes",
-                     data: { controller: "box" } do %>
+    <%= tag.section id: "boxes",
+                    data: { controller: "box" } do %>
       <%= component_with_collection "box", cache: patch.boxes,
                                            collection: patch.boxes %>
     <% end %>
   <% end %>
 
   <% cache patch.lines do %>
-    <%= tag.pc_lines id: "lines_container",
-                     class: "pc-line-container" do %>
+    <%= tag.section id: "lines_container",
+                    class: "pc-line-container" do %>
       <svg
         id="lines"
         width="100%"

@@ -10,7 +10,11 @@ class BoxComponent < ApplicationComponent
   attr_reader :box
 
   def interface_component_name
-    "interfaces/#{box.type}"
+    "interfaces/#{box.web_audio_type_name}"
+  end
+
+  def box_controllers
+    token_list("box", "move", "audio-node")
   end
 
   class EndpointComponent < ApplicationComponent
@@ -18,14 +22,21 @@ class BoxComponent < ApplicationComponent
       @endpoint = endpoint
     end
 
-    def call_endpoint
-      tag.pc_endpoint id: dom_id(endpoint) do
+    def call
+      tag.li id: dom_id(endpoint),
+             class: css_class,
+             data: { endpoint: endpoint.sgid,
+                     action: token_list("mousedown->endpoints#startLink",
+                                        "mouseup->endpoints#link"),
+                     endpoints_target: "destination",
+                     lines_target: "destination" } do
         endpoint
       end
     end
 
+
     def call_outlet
-      tag.pc_outlet id: dom_id(outlet) do
+      tag.li id: dom_id(outlet) do
         endpoint
       end
     end
@@ -36,6 +47,13 @@ class BoxComponent < ApplicationComponent
 
     def endpoint
       icon :circle, class: "is-small is-draggable"
+    end
+
+    def css_class
+      token_list("pc-inlet",
+                 "pc-control",
+                 "is-draggable",
+                 "has-z-index-control")
     end
   end
 end

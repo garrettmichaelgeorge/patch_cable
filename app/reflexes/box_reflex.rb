@@ -19,13 +19,14 @@ class BoxReflex < ApplicationReflex
   #   - reflex_id   - a UUIDv4 that uniquely identies each Reflex
 
   before_reflex do
+    # This should only work on patches#show
     throw :abort unless params[:id]
 
     @patch ||= Patch.find(params[:id])
   end
 
-  def create
-    @patch.boxes.create
+  def create_blank
+    @patch.boxes.create_as_type!(:blank)
 
     morph_patch 
   end
@@ -36,24 +37,37 @@ class BoxReflex < ApplicationReflex
 
     box.destroy
 
+    morph :nothing
+
     cable_ready.remove(selector: destroyed_box_id)
                .broadcast
-
-    morph :nothing
   end
 
   def move
     box = element.signed[:box]
 
+    morph :nothing
+
     box.update({
       x: element.dataset.x,
       y: element.dataset.y
     })
+  end
 
-    morph :nothing
+  def update
+    box = element.signed[:box]
+
+    box.assign_attributes(box_params)
+    box.save!
+
+    morph dom_id(box), render(BoxComponent.new(box: box))
   end
 
   private
+
+  def box_params
+    params.require(:box).permit(:web_audio_type_id)
+  end
 
   def morph_patch
     morph dom_id(@patch), render(partial: "patches/patch",

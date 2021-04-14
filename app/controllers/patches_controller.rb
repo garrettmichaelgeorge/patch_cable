@@ -6,6 +6,8 @@ class PatchesController < ApplicationController
   def show
     @patch ||= Patch.find(params[:id])
 
+    # Speed up page morphs by skipping the layout render
+    # https://docs.stimulusreflex.com/rtfm/patterns#speed-up-page-morphs
     if @stimulus_reflex
       render layout: false
     end

@@ -1,0 +1,11 @@
+<%= form_with model: box, url: edit_box_path(box.id), remote: true,
+              data: { } do |f| %>
+
+  <%= f.collection_select :web_audio_type_id, web_audio_types, :id, :name,
+                          { include_blank: true },
+                          { class: "pc-control px-2",
+                            data: { reflex: "change->Box#update",
+                                    reflex_dataset: "combined" } } %>
+
+  <%= f.submit hidden: true %>
+<% end %>

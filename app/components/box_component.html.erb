@@ -1,7 +1,7 @@
 <%= tag.pc_box id: dom_id(box),
                class: "box pc-box is-draggable",
                style: "transform: translate(#{box.x}px, #{box.y}px)",
-               data: { controller: "box move",
+               data: { controller: box_controllers,
                        x: box.x,
                        y: box.y,
                        box_target: "box",
@@ -15,10 +15,11 @@
     <% box.inlets.each do |inlet| %>
       <%= tag.li id: dom_id(inlet),
                  class: "pc-inlet pc-control is-draggable has-z-index-control",
-                 data: { inlet: inlet.sgid,
+                 data: { endpoint: inlet.sgid,
                          action: token_list("mousedown->endpoints#startLink",
                                             "mouseup->endpoints#link"),
                          endpoints_target: "destination",
+                         audio_node_target: "inlet",
                          lines_target: "destination" } do %>
         <%= icon_raw_tag :circle, css_class: "is-small" %>
       <% end %>
@@ -43,8 +44,9 @@
                  class: "pc-outlet pc-control is-draggable has-z-index-control",
                  data: { action: token_list("mousedown->endpoints#startLink",
                                             "mouseup->endpoints#link"),
-                         outlet: outlet.sgid,
+                         endpoint: outlet.sgid,
                          endpoints_target: "source",
+                         audio_node_target: "outlet",
                          lines_target: "source" } do %>
         <%= icon_raw_tag :circle, css_class: "is-small" %>
       <% end %>

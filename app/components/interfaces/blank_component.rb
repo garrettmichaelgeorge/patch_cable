@@ -5,9 +5,9 @@ class Interfaces::BlankComponent < ApplicationComponent
     @box = box
   end
 
-  def call
-    tag.pc_interface id: "interface_#{dom_id(box)}",
-                     data: { controller: "boxes_blank" }
+  def web_audio_types(web_audio_type_class = WebAudioType)
+    # web_audio_type_class.all.map { |record| [ record.name, record.id ] }
+    web_audio_type_class.order(:name)
   end
 
   private

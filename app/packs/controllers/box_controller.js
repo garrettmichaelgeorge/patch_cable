@@ -35,6 +35,12 @@ export default class extends ApplicationController {
     this.stimulate("Box#destroy")
   }
 
+  update (event) {
+    const webAudioTypeId = event.target.value
+    console.log(`Creating box as ${webAudioTypeId}`)
+    this.stimulate("Box#create_as", webAudioTypeId)
+  }
+
   beforeCreate(element) {
     fastdom.mutate(() => {
       element.classList.add("is-loading", "is-primary")
@@ -45,6 +51,10 @@ export default class extends ApplicationController {
     fastdom.mutate(() => {
       element.classList.remove("is-loading", "is-primary")
     })
+  }
+
+  updateSuccess(element) {
+    console.log("Update successful!", element)
   }
 
   get observerConfig () {

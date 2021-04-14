@@ -4,6 +4,7 @@ module IconHelper
   ICON_TYPES = { solid: "fas",
                  brand: "fab" }.freeze
 
+  # Usage: icon_tag :circle
   def icon_tag(name, type: :solid, size: "", **opts)
     icon_wrapper_tag(**opts) do
       icon_raw_tag(name, type: type, size: size)
@@ -11,6 +12,7 @@ module IconHelper
   end
   alias icon icon_tag
 
+  # Usage: icon_raw_tag :circle
   def icon_raw_tag(name, type: :solid, size: "", **opts)
     css_class = opts.delete(:class) if opts.has_key?(:class)
 

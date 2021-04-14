@@ -58,8 +58,9 @@ export default class extends Controller {
   move (event) {
     fastdom.mutate(() => {
       const coordinates = this._coordinatesAt(event.pageX, event.pageY)
-      this.element.style.left = `${coordinates.x}px`
-      this.element.style.top = `${coordinates.y}px`
+      // this.element.style.left = `${coordinates.x}px`
+      // this.element.style.top = `${coordinates.y}px`
+      this.element.style.transform = `translate(${coordinates.x}px, ${coordinates.y}px)`
       this.element.setAttribute("data-x", coordinates.x)
       this.element.setAttribute("data-y", coordinates.y)
     })
