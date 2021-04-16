@@ -1,6 +1,6 @@
 # Adapted from RailsLookup gem by Nimrod Priell (Twitter: @nimrodpriell)
 # https://github.com/Nimster/RailsLookup
-module RailsLookup
+module Lookupable
   extend ActiveSupport::Concern
 
   included do
