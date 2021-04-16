@@ -2,7 +2,7 @@
   is-hidden
 <% end %>
 
-<% cache @patch do %>
+<%# cache @patch do %>
   <%= tag.section id: dom_class(@patch, :container),
                   class: "pc-patch drag--droppable is-flex",
                   data: { controller: "audio-context lines",
@@ -18,10 +18,29 @@
                                              "mouseup->move#drop",
                                              "click->audio-context#start:once") } do %>
 
-    <%= render "patches/main_controls", patch: @patch, cached: true %>
+    <%= component "controls/main", patch: @patch do |c| %>
+      <%= c.menu_list do %>
+        Hello???
+      <% end %>
+
+      <%= c.controls([
+        { icon: :hamburger, id: "popover-main-menu-trigger",
+                            aria: { describedby: "popover-main-menu-trigger" },
+                            data: { controller: "popover",
+                                    action: "popover#show",
+                                    popover_template: "template-patch-main-menu" } },
+        { icon: :plus, id: dom_class(@patch.boxes, :create),
+                       data: { controller: "box",
+                               reflex: "click->Box#create_blank",
+                               patch_id: @patch.id } },
+        { icon: :blank },
+        { icon: :blank }
+      ]) %>
+    <% end %>
+
     <%= render @patch, cached: true %>
   <% end %>
-<% end %>
+<%# end %>
 
 <section id="templates">
   <%= render "shared/menus/line_menu" %>

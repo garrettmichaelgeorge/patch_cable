@@ -1,0 +1,11 @@
+<%= tag.fieldset class: "menu is-clipped is-w-min-content has-background-light" do %>
+
+  <%= content_tag :ul, class: "menu-list" do %>
+
+    <% controls.each do |control| %>
+      <%= control %>
+    <% end %>
+
+  <% end %>
+  
+<% end %>
