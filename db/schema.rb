@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_200053) do
+ActiveRecord::Schema.define(version: 2021_04_16_222032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "audio_nodes", force: :cascade do |t|
+  create_table "audio_types", force: :cascade do |t|
     t.string "name", limit: 40, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_audio_nodes_on_name", unique: true
+    t.index ["name"], name: "index_audio_types_on_name", unique: true
   end
 
   create_table "boxes", force: :cascade do |t|
@@ -42,6 +42,13 @@ ActiveRecord::Schema.define(version: 2021_04_10_200053) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lines_count"
     t.index ["box_id"], name: "index_inlets_on_box_id"
+  end
+
+  create_table "interfaces", force: :cascade do |t|
+    t.string "name", limit: 40, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_interfaces_on_name", unique: true
   end
 
   create_table "lines", force: :cascade do |t|
@@ -70,7 +77,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_200053) do
     t.integer "boxes_count"
   end
 
-  add_foreign_key "boxes", "audio_nodes"
+  add_foreign_key "boxes", "audio_types", column: "audio_node_id"
   add_foreign_key "boxes", "patches"
   add_foreign_key "inlets", "boxes"
   add_foreign_key "outlets", "boxes"
