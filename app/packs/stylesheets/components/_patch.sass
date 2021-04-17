@@ -13,9 +13,28 @@
   height: auto
   width: intrinsic
 
-  .delete
+  .is-top-right, .is-top-left, .is-bottom-left, .is-bottom-right
+    @extend .mx-1
+    @extend .my-1
+
+  .is-top-right
     position: absolute
     top: 0
+    right: 0
+
+  .is-top-left
+    position: absolute
+    top: 0
+    left: 0
+
+  .is-bottom-left
+    position: absolute
+    bottom: 0
+    left: 0
+
+  .is-bottom-right
+    position: absolute
+    bottom: 0
     right: 0
 
 .pc-line-container

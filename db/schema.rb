@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_222032) do
+ActiveRecord::Schema.define(version: 2021_04_16_222545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2021_04_16_222032) do
     t.string "name", limit: 40, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "interface_id"
+    t.index ["interface_id"], name: "index_audio_types_on_interface_id"
     t.index ["name"], name: "index_audio_types_on_name", unique: true
   end
 
@@ -77,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_04_16_222032) do
     t.integer "boxes_count"
   end
 
+  add_foreign_key "audio_types", "interfaces"
   add_foreign_key "boxes", "audio_types", column: "audio_node_id"
   add_foreign_key "boxes", "patches"
   add_foreign_key "inlets", "boxes"

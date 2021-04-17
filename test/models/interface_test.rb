@@ -5,7 +5,7 @@ describe Interface do
   subject { build(:interface) }
 
   context "associations" do
-    should have_many(:boxes).inverse_of(:web_audio_type)
+    should have_many(:web_audio_types).inverse_of(:interface).dependent(:destroy)
   end
 
   class << self

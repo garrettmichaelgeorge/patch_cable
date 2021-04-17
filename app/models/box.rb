@@ -21,6 +21,9 @@ class Box < ApplicationRecord
   scope :as_blank,       -> { as("blank") }
 
   delegate :name, to: :web_audio_type, prefix: true
+  delegate :interface_type, to: :web_audio_type
+
+  alias audio_type web_audio_type_name
 
   alias_attribute :web_audio_type_id, :audio_node_id 
 
@@ -79,6 +82,6 @@ class Box < ApplicationRecord
   end
 
   def look_up_web_audio_type(web_audio_type_class = WebAudioType, **args)
-    web_audio_type_class.find_or_create_by(**args)
+    web_audio_type_class.find_by(**args)
   end
 end

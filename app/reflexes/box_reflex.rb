@@ -26,7 +26,7 @@ class BoxReflex < ApplicationReflex
   end
 
   def create_blank
-    @patch.boxes.create_as_type!(:blank)
+    @patch.boxes.create_as_type!("Blank")
 
     morph_patch 
   end
