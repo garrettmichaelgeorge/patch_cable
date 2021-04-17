@@ -26,15 +26,15 @@
     <% end %>
   <% end %>
 
-  <%= component interface_component_name, box: box %>
+  <%= render interface_for(box) %>
 
-  <p>
+  <p class="is-top-left">
     <small>
       <%= box.id %>
     </small>
   </p>
 
-  <%= tag.button class: "delete is-small is-danger mt-1 mr-1",
+  <%= tag.button class: "delete is-top-right is-small is-danger mt-1 mr-1",
                  data: { reflex: "click->Box#destroy",
                          reflex_dataset: "combined" } %>
 

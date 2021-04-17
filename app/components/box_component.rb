@@ -9,8 +9,9 @@ class BoxComponent < ApplicationComponent
 
   attr_reader :box
 
-  def interface_component_name
-    "interfaces/#{box.web_audio_type_name}"
+  def interface_for(box, factory = UI::InterfaceComponentFactory)
+    # "interfaces/#{box.web_audio_type_name}"
+    factory.build(box: box)
   end
 
   def box_controllers
@@ -37,7 +38,7 @@ class BoxComponent < ApplicationComponent
 
     def call_outlet
       tag.li id: dom_id(outlet) do
-        endpoint
+        endpoint_element
       end
     end
 
@@ -45,7 +46,7 @@ class BoxComponent < ApplicationComponent
 
     attr_reader :endpoint
 
-    def endpoint
+    def endpoint_element
       icon :circle, class: "is-small is-draggable"
     end
 
